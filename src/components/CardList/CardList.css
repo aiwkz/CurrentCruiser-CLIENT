@@ -1,0 +1,27 @@
+.CardList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.CardList-add-button {
+    width: 100%;
+    margin-inline: 40%;
+    background-color: white;
+    border-radius: 0.5rem;
+    border: 2px solid cornflowerblue;
+    padding: 0.5rem 4rem;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: black;
+}
+
+.CardList-add-button:hover {
+    background-color: cornflowerblue;
+    color: white;
+}

@@ -1,0 +1,71 @@
+.Card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    border: 2px solid cornflowerblue;
+    border-radius: 1rem;
+    transition: transform 0.2s;
+    width: 25rem;
+    height: 20rem;
+}
+
+.Card:hover {
+    transform: scale(1.1);
+    box-shadow: 0.5rem 0.5rem 2rem -1rem rgba(0, 0, 0, 0.75);
+}
+
+.Card-title-value-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-block: 0.5rem;
+}
+
+.Card h2 {
+    color: chocolate;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.Card-title {
+    color: cornflowerblue;
+}
+
+.Card-action-buttons-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    width: 100%;
+    padding-inline: 3rem;
+}
+
+.Card-button {
+    background-color: white;
+    border-radius: 0.5rem;
+    border: 2px solid cornflowerblue;
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: black;
+}
+
+.Card-button:hover {
+    background-color: cornflowerblue;
+    color: white;
+}
+
+.Card-delete-action {
+    border: 2px solid crimson;
+}
+
+.Card-delete-action:hover {
+    background-color: crimson;
+    color: white;
+}
