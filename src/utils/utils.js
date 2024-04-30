@@ -15,10 +15,6 @@ export const fetchData = async ({ url, method = 'GET', body = null, timeout = 50
   try {
     const response = await fetch(url, fetchOptions);
 
-    // if (!response.ok) {
-    //   throw new Error('Something went wrong!', response.statusText)
-    // }
-
     clearTimeout(abortTimeout);
 
     const responseData = await response.json();

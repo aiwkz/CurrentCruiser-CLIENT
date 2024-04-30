@@ -22,3 +22,12 @@ export const INITIAL_LOGIN_FORM_STATE = {
   email: '',
   password: '',
 };
+
+export const INITIAL_USER_DATA = {
+  username: '',
+  email: '',
+  password: '',
+  created_at: '',
+  updated_at: '',
+  deleted_at: ''
+};

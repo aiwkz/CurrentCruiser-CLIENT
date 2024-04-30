@@ -45,6 +45,14 @@
     font-size: 4rem;
 }
 
+.Header-logout-action {
+    cursor: pointer;
+}
+
+.Header-logout-action:hover {
+    color: cornflowerblue;
+}
+
 @media (max-width: 768px) {
     .Header-toggle-button {
         display: block;
