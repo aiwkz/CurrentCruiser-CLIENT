@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '@/contexts/authContext';
 import { fetchData } from '@/utils/utils';
 import { INITIAL_REGISTER_FORM_STATE } from '@/constants/constants';
+import Button from '@/components/Button/Button';
 
 import './RegisterForm.css';
 
@@ -77,7 +78,7 @@ const RegisterForm = () => {
           required
         />
         {error && <p className='RegisterForm-error'>{error}</p>}
-        <button type='submit'>Register</button>
+        <Button type='submit'>Register</Button>
         <div>
           Already have an account?
           <span

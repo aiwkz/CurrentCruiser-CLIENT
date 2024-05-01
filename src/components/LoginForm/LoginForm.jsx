@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '@/contexts/authContext';
 import { fetchData } from '@/utils/utils';
 import { INITIAL_LOGIN_FORM_STATE } from '@/constants/constants';
+import Button from '@/components/Button/Button';
 
 import './LoginForm.css';
 
@@ -69,7 +70,7 @@ const LoginForm = () => {
           required
         />
         {error && <p className='LoginForm-error'>{error}</p>}
-        <button type='submit'>Login</button>
+        <Button type='submit'>Login</Button>
         <div>
           Don't have an account yet?
           <span

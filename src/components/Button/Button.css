@@ -1,0 +1,17 @@
+.Button {
+    border-radius: 0.5rem;
+    border: none;
+    padding: 0.7rem 3rem;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: inherit;
+    text-transform: uppercase;
+    color: var(--white-color);
+    background-color: var(--primary-color);
+    cursor: pointer;
+}
+
+.Button:hover {
+    background-color: var(--accent-color);
+    color: var(--black-color);
+}
