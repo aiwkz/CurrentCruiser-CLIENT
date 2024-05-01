@@ -42,7 +42,7 @@
     width: 100%;
     text-align: center;
     padding-block: 1rem;
-    background-color: cornflowerblue;
+    background-color: var(--primary-color);
     color: black;
     cursor: pointer;
     font-size: 1.5rem;
@@ -50,5 +50,5 @@
 }
 
 .Modal-div-option:hover {
-    color: whitesmoke;
+    color: var(--white-color);
 }

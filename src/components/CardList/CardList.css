@@ -10,9 +10,9 @@
 .CardList-add-button {
     width: 100%;
     margin-inline: 40%;
-    background-color: white;
+    background-color: var(--white-color);
     border-radius: 0.5rem;
-    border: 2px solid cornflowerblue;
+    border: 2px solid var(--primary-color);
     padding: 0.5rem 4rem;
     cursor: pointer;
     text-decoration: none;
@@ -22,6 +22,6 @@
 }
 
 .CardList-add-button:hover {
-    background-color: cornflowerblue;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--white-color);
 }

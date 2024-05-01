@@ -5,6 +5,16 @@
     box-sizing: border-box;
 }
 
+/* Declaration of color variables */
+:root {
+    --primary-color: #6495ed;
+    --secondary-color: #134074;
+    --accent-color: #7cdeff;
+    --black-color: #171717;
+    --white-color: #f2f2f2;
+    --warning-color: #dc143c;
+}
+
 /* Remove default padding */
 ul[class],
 ol[class] {

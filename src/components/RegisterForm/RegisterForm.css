@@ -8,11 +8,11 @@
 }
 
 .RegisterForm-error {
-    color: crimson;
+    color: var(--warning-color);
 }
 
 .RegisterForm-login-action {
     margin-left: 0.5rem;
-    color: cornflowerblue;
+    color: var(--primary-color);
     cursor: pointer;
 }

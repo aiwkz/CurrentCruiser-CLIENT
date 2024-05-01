@@ -20,12 +20,12 @@
 }
 
 .Header-a {
-    color: cornflowerblue;
+    color: var(--primary-color);
     text-decoration: none;
 }
 
 .Header-a:hover {
-    color: black;
+    color: var(--black-color);
 }
 
 .Header-li {
@@ -50,7 +50,7 @@
 }
 
 .Header-logout-action:hover {
-    color: cornflowerblue;
+    color: var(--primary-color);
 }
 
 @media (max-width: 768px) {
@@ -71,7 +71,7 @@
     }
 
     .Header-a {
-        color: whitesmoke;
+        color: var(--white-color);
         text-decoration: none;
     }
 
@@ -89,13 +89,13 @@
         right: 0;
         width: 17rem;
         height: 100%;
-        background-color: cornflowerblue;
-        box-shadow: 0.1rem 0 0.4rem black;
+        background-color: var(--primary-color);
+        box-shadow: 0.1rem 0 0.4rem var(--black-color);
         transition: left 0.3s ease-in-out;
         z-index: 1;
     }
 
     .Header-toggle-button.isVisible:hover {
-        color: whitesmoke;
+        color: var(--white-color);
     }
 }

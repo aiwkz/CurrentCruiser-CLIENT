@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     padding: 1.5rem;
-    border: 2px solid cornflowerblue;
+    border: 2px solid var(--primary-color);
     border-radius: 1rem;
     transition: transform 0.2s;
     width: 25rem;
@@ -25,13 +25,13 @@
 }
 
 .Card h2 {
-    color: chocolate;
+    color: var(--accent-color);
     font-size: 1.3rem;
     text-align: center;
 }
 
 .Card-title {
-    color: cornflowerblue;
+    color: var(--primary-color);
 }
 
 .Card-action-buttons-container {
@@ -45,27 +45,27 @@
 }
 
 .Card-button {
-    background-color: white;
+    background-color: var(--white-color);
     border-radius: 0.5rem;
-    border: 2px solid cornflowerblue;
+    border: 2px solid var(--primary-color);
     padding: 0.5rem 2rem;
     cursor: pointer;
     text-decoration: none;
     text-transform: uppercase;
     font-weight: bold;
-    color: black;
+    color: var(--black-color);
 }
 
 .Card-button:hover {
-    background-color: cornflowerblue;
+    background-color: var(--primary-color);
     color: white;
 }
 
 .Card-delete-action {
-    border: 2px solid crimson;
+    border: 2px solid var(--warning-color);
 }
 
 .Card-delete-action:hover {
-    background-color: crimson;
+    background-color: var(--warning-color);
     color: white;
 }
