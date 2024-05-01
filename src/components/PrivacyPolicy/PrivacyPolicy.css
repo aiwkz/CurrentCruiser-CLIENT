@@ -1,0 +1,10 @@
+.PrivacyPolicy {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 2rem;
+}
+
+.PrivacyPolicy p {
+    margin-bottom: 1rem;
+}

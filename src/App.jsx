@@ -7,6 +7,8 @@ import Home from '@/components/Home/Home';
 import NotFound from '@/components/NotFound/NotFound';
 import RegisterForm from '@/components/RegisterForm/RegisterForm';
 import LoginForm from '@/components/LoginForm/LoginForm';
+import TermsOfService from '@/components/TermsOfService/TermsOfService';
+import PrivacyPolicy from '@/components/PrivacyPolicy/PrivacyPolicy';
 
 import './App.css'
 
@@ -25,6 +27,9 @@ const App = () => {
 
             <Route index element={<Home />} />
             <Route path='/home' element={<Home />} />
+
+            <Route path='/terms-of-service' element={<TermsOfService />} />
+            <Route path='/privacy-policy' element={<PrivacyPolicy />} />
 
             <Route path='*' element={<NotFound />} />
           </Route>

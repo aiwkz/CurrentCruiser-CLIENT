@@ -1,14 +1,24 @@
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
+
 import Logo from '@/assets/img/logo.svg';
 import UserMenu from '@/components/UserMenu/UserMenu';
+import { AuthContext } from '@/contexts/authContext';
 
 import './Header.css';
 
 const Header = () => {
+  const { isAuthenticated } = useContext(AuthContext);
+
   return (
     <header className='Header'>
-      <h1><img className='Header-logo' alt='Logo' src={Logo} /></h1>
+      <h1>
+        <Link to='/'>
+          <img className='Header-logo' alt='Logo' src={Logo} />
+        </Link>
+      </h1>
 
-      <UserMenu />
+      {isAuthenticated && <UserMenu />}
     </header>
   );
 };
