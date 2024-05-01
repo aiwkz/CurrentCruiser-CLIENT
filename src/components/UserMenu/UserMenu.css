@@ -1,0 +1,78 @@
+.UserMenu-icons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.7rem;
+    cursor: pointer;
+}
+
+.UserMenu-profile-icon {
+    width: 2.5rem;
+    height: auto;
+}
+
+.UserMenu-open-close-menu-icon {
+    width: 0.8rem;
+    height: auto;
+}
+
+.UserMenu-ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    list-style: none;
+}
+
+.UserMenu-a:hover {
+    color: var(--secondary-color);
+}
+
+.UserMenu-logout {
+    color: var(--white-color);
+    cursor: pointer;
+}
+
+.UserMenu-logout:hover {
+    color: var(--secondary-color);
+}
+
+.UserMenu-li {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.UserMenu-nav {
+    display: none;
+}
+
+.UserMenu-a {
+    color: var(--white-color);
+    text-decoration: none;
+}
+
+.UserMenu-icons-container.isOpen {
+    position: fixed;
+    top: 2.35rem;
+    right: 4rem;
+    z-index: 2;
+}
+
+.UserMenu-nav.isOpen {
+    display: flex;
+    right: 0;
+}
+
+.UserMenu-ul.isOpen {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 6rem;
+    right: 0;
+    width: 13rem;
+    height: 20%;
+    background-color: var(--primary-color);
+    transition: left 0.3s ease-in-out;
+    z-index: 1;
+}
