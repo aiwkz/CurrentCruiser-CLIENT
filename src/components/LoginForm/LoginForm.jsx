@@ -13,6 +13,7 @@ const LoginForm = () => {
   const [error, setError] = useState(null);
   const { isAuthenticated, login } = useContext(AuthContext);
   const navigate = useNavigate();
+  const BackendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     // Redirect to home page if user is already authenticated
@@ -32,7 +33,7 @@ const LoginForm = () => {
 
     try {
       await fetchData({
-        url: 'http://localhost:8080/api/auth/login',
+        url: `${BackendUrl}/auth/login`,
         method: 'POST',
         body: formData,
         callback: ({ status, jwttoken, user }) => {
