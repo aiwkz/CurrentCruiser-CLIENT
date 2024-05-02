@@ -2,6 +2,8 @@ import { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '@/contexts/authContext';
+import CarsProvider from '@/contexts/carsContext';
+import Card from '@/components/Card/Card'
 
 import './Home.css';
 
@@ -16,10 +18,14 @@ const Home = () => {
     };
   }, []);
 
+
   return (
-    <>
-      <h1>Home</h1>
-    </>
+    <CarsProvider>
+      <>
+        <h1>Home</h1>
+        <Card />
+      </>
+    </CarsProvider>
   );
 };
 
