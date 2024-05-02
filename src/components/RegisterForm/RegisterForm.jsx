@@ -56,8 +56,8 @@ const RegisterForm = () => {
         <label>Name</label>
         <input
           type='text'
-          name='name'
-          value={formData.name}
+          name='username'
+          value={formData.username}
           onChange={handleInputChange}
           required
         />

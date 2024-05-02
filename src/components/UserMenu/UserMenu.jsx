@@ -11,7 +11,7 @@ import './UserMenu.css'
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { logout } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -31,11 +31,13 @@ const UserMenu = () => {
           src={UserProfileIcon}
         />
 
-        <img
+        {user.username && <span className='UserMenu-username'>{user.username}</span>}
+
+        {<img
           className='UserMenu-open-close-menu-icon'
           alt='Open/Close menu icon'
           src={isOpen ? ArrowDown : ArrowUp}
-        />
+        />}
       </div>
 
       <nav className={`UserMenu-nav ${isOpen ? 'isOpen' : ''}`}>

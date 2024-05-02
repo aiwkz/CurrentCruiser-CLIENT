@@ -13,7 +13,7 @@ export const INITIAL_DATA = {
 };
 
 export const INITIAL_REGISTER_FORM_STATE = {
-  name: '',
+  username: '',
   email: '',
   password: '',
 };

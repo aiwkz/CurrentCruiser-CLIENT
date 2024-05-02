@@ -2,8 +2,8 @@ import { useState, createContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import AuthProvider from '@/contexts/authContext';
-import Layout from '@/components/Layout/Layout';
-import Home from '@/components/Home/Home';
+import Layout from '@/layouts/DefaultLayout/DefaultLayout';
+import Home from '@/pages/Home/Home';
 import NotFound from '@/components/NotFound/NotFound';
 import RegisterForm from '@/components/RegisterForm/RegisterForm';
 import LoginForm from '@/components/LoginForm/LoginForm';

@@ -16,3 +16,7 @@
     color: var(--primary-color);
     cursor: pointer;
 }
+
+.LoginForm-register-action:hover {
+    color: var(--accent-color);
+}

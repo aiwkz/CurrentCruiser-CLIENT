@@ -11,6 +11,15 @@
     height: auto;
 }
 
+.UserMenu-username {
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+.UserMenu-username:hover {
+    color: var(--accent-color);
+}
+
 .UserMenu-open-close-menu-icon {
     width: 0.8rem;
     height: auto;
