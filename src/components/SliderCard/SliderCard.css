@@ -1,0 +1,35 @@
+.SliderCard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    min-height: 12rem;
+}
+
+.SliderCard-name-history-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 1rem;
+}
+
+.SliderCard-img {
+    width: auto;
+    max-height: 8.8rem;
+    border-radius: 0 5rem 5rem 0;
+}
+
+.SliderCard-name {
+    font-size: 2rem;
+}
+
+@media (max-width: 768px) {
+    .SliderCard {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1.5rem;
+    }
+}

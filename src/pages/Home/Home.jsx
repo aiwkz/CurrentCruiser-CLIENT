@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '@/contexts/authContext';
 import CarsProvider from '@/contexts/carsContext';
-import Card from '@/components/Card/Card'
+import Hero from '@/components/Hero/Hero'
 
 import './Home.css';
 
@@ -22,8 +22,7 @@ const Home = () => {
   return (
     <CarsProvider>
       <>
-        <h1>Home</h1>
-        <Card />
+        <Hero />
       </>
     </CarsProvider>
   );

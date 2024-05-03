@@ -1,0 +1,20 @@
+.Slider {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Slider-prev-button,
+.Slider-next-button {
+    flex-grow: 4;
+    background: none;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+}
+
+.Slider-prev-button:hover,
+.Slider-next-button:hover {
+    color: var(--accent-color);
+}

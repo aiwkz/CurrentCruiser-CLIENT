@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react';
+
 import { fetchData } from '@/utils/utils';
 
 // Create a new context for managing cars
