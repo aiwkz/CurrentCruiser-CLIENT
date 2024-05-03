@@ -51,3 +51,23 @@
 .Footer-copyright {
     color: var(--white-color);
 }
+
+@media (max-width: 768px) {
+    .Footer-content-container {
+        flex-direction: column;
+    }
+
+    .Footer-contact-info,
+    .Footer-social-links {
+        width: 100%;
+    }
+
+    .Footer-contact-info,
+    .Footer-social-links {
+        align-items: center;
+    }
+
+    .Footer-social-links {
+        margin-block: 1.5rem;
+    }
+}

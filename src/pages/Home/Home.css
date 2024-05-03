@@ -1,0 +1,10 @@
+.Home-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.Home-section {
+    margin-block: 2rem;
+}

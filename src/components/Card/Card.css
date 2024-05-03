@@ -1,0 +1,66 @@
+.Card {
+    flex: 0 0 25%;
+    padding: 1rem;
+    transition: transform 0.2s;
+    cursor: pointer;
+    border-radius: 1rem 1rem 1rem 0;
+}
+
+.Card:hover {
+    transform: scale(1.1);
+    box-shadow: 0.5rem 0.5rem 2rem -1rem rgba(0, 0, 0, 0.75);
+}
+
+.Card-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center center;
+    border-radius: 1rem;
+}
+
+.Card-name {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.Card-description {
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+@media (max-width: 768px) {
+    .Card {
+        flex-basis: 40%;
+        height: 22rem;
+    }
+
+    .Card-name {
+        margin-top: 1rem;
+        font-size: 1.3rem;
+    }
+
+    .Card-description {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 590px) {
+    .Card {
+        flex-basis: 80%;
+        height: 18rem;
+    }
+
+    .Card-img {
+        width: 50%;
+    }
+
+    .Card-name {
+        font-size: 1.2rem;
+    }
+
+    .Card-description {
+        font-size: 0.8rem;
+    }
+}

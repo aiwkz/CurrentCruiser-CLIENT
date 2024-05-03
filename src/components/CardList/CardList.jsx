@@ -1,11 +1,11 @@
+import Card from '@/components/Card/Card';
 
 import './CardList.css';
 
-const CardList = () => {
-
+const CardList = ({ cars }) => {
   return (
     <div className='CardList'>
-      CardList
+      {cars.map(car => <Card key={car._id} {...car} />)}
     </div>
   );
 };

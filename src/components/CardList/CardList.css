@@ -1,8 +1,7 @@
 .CardList {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
-    gap: 1.5rem;
+    justify-content: space-around;
+    gap: 2rem;
     margin-top: 2rem;
 }

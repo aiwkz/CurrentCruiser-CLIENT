@@ -31,3 +31,18 @@ export const INITIAL_USER_DATA = {
   updated_at: '',
   deleted_at: ''
 };
+
+export const INITIAL_CURRENT_CAR_DATA = {
+
+  _id: '',
+  name: '',
+  img: '',
+  history: '',
+  description: '',
+  specifications: {},
+  category_id: '',
+  created_at: '',
+  updated_at: '',
+  deleted_at: '',
+  available_in_market: false
+};

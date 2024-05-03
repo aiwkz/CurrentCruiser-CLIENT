@@ -6,12 +6,8 @@ import { CarsContext } from '@/contexts/carsContext';
 import './Hero.css';
 
 const Hero = () => {
-  const { getAllCars, cars } = useContext(CarsContext);
+  const { cars } = useContext(CarsContext);
   const [currentCarIndex, setCurrentCarIndex] = useState(0);
-
-  useEffect(() => {
-    getAllCars();
-  }, []);
 
   useEffect(() => {
     if (cars.length > 0) {

@@ -1,6 +1,7 @@
 import React, { createContext, useState } from 'react';
 
 import { fetchData } from '@/utils/utils';
+import { INITIAL_CURRENT_CAR_DATA } from '@/constants/constants';
 
 // Create a new context for managing cars
 export const CarsContext = createContext();
@@ -9,6 +10,9 @@ export const CarsContext = createContext();
 const CarsProvider = ({ children }) => {
   // State to store the list of cars
   const [cars, setCars] = useState([]);
+
+  // State to store the current selected car
+  const [currentCar, setCurrentCar] = useState(INITIAL_CURRENT_CAR_DATA);
 
   // State to handle errors
   const [error, setError] = useState(null);
@@ -83,6 +87,8 @@ const CarsProvider = ({ children }) => {
     <CarsContext.Provider
       value={{
         cars,
+        currentCar,
+        setCurrentCar,
         error,
         getAllCars,
         addCar,

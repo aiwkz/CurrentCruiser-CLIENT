@@ -1,0 +1,56 @@
+.CardDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.CardDetails-name,
+.CardDetails-back-action {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.CardDetails-back-action {
+    cursor: pointer;
+    margin-right: 1rem;
+    color: var(--secondary-color);
+}
+
+.CardDetails-back-action:hover {
+    color: var(--accent-color);
+}
+
+.CardDetails-content-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.CardDetails-img-specifications-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.CardDetails-title-specifications-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    margin-left: 1rem;
+}
+
+.CardDetails-specifications-title {
+    font-size: 1.5rem;
+}
+
+.CardDetails-specification-key {
+    font-weight: bold;
+    text-transform: capitalize;
+}
