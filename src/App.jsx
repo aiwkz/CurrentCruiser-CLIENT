@@ -22,7 +22,6 @@ const App = () => {
           <Route path='/login' element={<LoginForm />} />
 
           <Route index element={<Home />} />
-          <Route path='/home' element={<Home />} />
 
           <Route path='/terms-of-service' element={<TermsOfService />} />
           <Route path='/privacy-policy' element={<PrivacyPolicy />} />
