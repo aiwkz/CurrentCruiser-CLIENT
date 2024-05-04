@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import { createContext, useState } from 'react';
 
 import { fetchData } from '@/utils/utils';
 import { INITIAL_CURRENT_CAR_DATA } from '@/constants/constants';
@@ -87,6 +87,7 @@ const CarsProvider = ({ children }) => {
     <CarsContext.Provider
       value={{
         cars,
+        setCars,
         currentCar,
         setCurrentCar,
         error,

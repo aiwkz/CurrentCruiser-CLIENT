@@ -1,11 +1,12 @@
-export const fetchData = async ({ url, method = 'GET', body = null, timeout = 5000, callback = null, setError = null }) => {
+export const fetchData = async ({ url, method = 'GET', body = null, timeout = 5000, callback = null, setError = null, token = null }) => {
   const controller = new AbortController();
   const abortTimeout = setTimeout(() => controller.abort(), timeout);
 
   const fetchOptions = {
     method,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': token
     },
     signal: controller.signal,
   }

@@ -1,5 +1,5 @@
-import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useContext, useEffect, useRef } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
 import UserProfileIcon from '@/assets/icons/user-profile-icon.svg';
 import ArrowDown from '@/assets/icons/arrow-down-icon.svg';
@@ -7,20 +7,34 @@ import ArrowUp from '@/assets/icons/arrow-up-icon.svg';
 import { MENU_ITEMS } from '@/constants/constants';
 import { AuthContext } from '@/contexts/authContext';
 
-import './UserMenu.css'
+import './UserMenu.css';
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { logout, user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const menuRef = useRef(null);
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate('/login');
-  }
+  };
+
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div className='UserMenu'>
+    <div className='UserMenu' ref={menuRef}>
       <div
         className={`UserMenu-icons-container ${isOpen ? 'isOpen' : ''}`}
         onClick={() => setIsOpen(!isOpen)}
@@ -44,16 +58,15 @@ const UserMenu = () => {
         <ul className={`UserMenu-ul ${isOpen ? 'isOpen' : ''}`} >
           {
             MENU_ITEMS.map(({ id, title, href }) =>
-              <a
-                key={id}
-                href={href}
-                target='_blank'
-                className='UserMenu-a'
-              >
-                <li className='UserMenu-li'>
+              <li className='UserMenu-li' key={id}>
+                <Link
+                  to={href}
+                  className='UserMenu-link'
+                >
                   {title.toUpperCase()}
-                </li>
-              </a>)
+                </Link>
+              </li>
+            )
           }
 
           <li

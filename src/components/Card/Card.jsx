@@ -2,11 +2,13 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { CarsContext } from '@/contexts/carsContext';
+import { ListsContext } from '@/contexts/listsContext';
 
 import './Card.css';
 
 const Card = ({ _id, img, name, description }) => {
-  const { cars, setCurrentCar, currentCar } = useContext(CarsContext);
+  const { cars, setCurrentCar } = useContext(CarsContext);
+
   const navigate = useNavigate();
   const { VITE_BACKEND_URL } = import.meta.env;
 

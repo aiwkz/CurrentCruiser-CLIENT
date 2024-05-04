@@ -2,17 +2,18 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '@/contexts/authContext';
+import Button from '@/components/Button/Button';
 import { fetchData } from '@/utils/utils';
 import { INITIAL_LOGIN_FORM_STATE } from '@/constants/constants';
-import Button from '@/components/Button/Button';
 
 import './LoginForm.css';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState(INITIAL_LOGIN_FORM_STATE);
   const [error, setError] = useState(null);
-  const { isAuthenticated, login } = useContext(AuthContext);
+  const { isAuthenticated, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { VITE_BACKEND_URL } = import.meta.env;
 
   useEffect(() => {
     // Redirect to home page if user is already authenticated
@@ -29,10 +30,11 @@ const LoginForm = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
+    await logout();
 
     try {
       await fetchData({
-        url: `${process.env.VITE_BACKEND_URL}/auth/login`,
+        url: `${VITE_BACKEND_URL}/auth/login`,
         method: 'POST',
         body: formData,
         callback: ({ status, jwttoken, user }) => {

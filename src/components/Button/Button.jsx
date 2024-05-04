@@ -1,5 +1,5 @@
 import './Button.css';
 
-const Button = ({ children }) => <button className='Button'>{children}</button>;
+const Button = ({ children, onClick }) => <button onClick={onClick} className='Button'>{children}</button>;
 
 export default Button;

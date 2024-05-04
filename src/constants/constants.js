@@ -2,25 +2,30 @@ export const MENU_ITEMS = [
   {
     id: 1,
     title: 'lists',
-    href: '/'
+    href: '/lists'
   }
 ];
 
 export const INITIAL_DATA = {
   data: [],
   msg: '',
-  status: '',
+  status: ''
 };
 
 export const INITIAL_REGISTER_FORM_STATE = {
   username: '',
   email: '',
-  password: '',
+  password: ''
 };
 
 export const INITIAL_LOGIN_FORM_STATE = {
   email: '',
-  password: '',
+  password: ''
+};
+
+export const INITIAL_CREATE_LIST_FORM_STATE = {
+  title: '',
+  cars: []
 };
 
 export const INITIAL_USER_DATA = {
@@ -33,7 +38,6 @@ export const INITIAL_USER_DATA = {
 };
 
 export const INITIAL_CURRENT_CAR_DATA = {
-
   _id: '',
   name: '',
   img: '',

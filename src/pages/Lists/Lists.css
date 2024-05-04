@@ -1,0 +1,57 @@
+.Lists {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Lists-title {
+    margin: 1.5rem;
+    font-size: 2rem;
+}
+
+.Lists-list-container {
+    margin-block: 2rem;
+}
+
+.Lists-action-buttons-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    width: 100%;
+    padding-inline: 3rem;
+}
+
+.Lists-button-edit-icon,
+.Lists-button-delete-icon {
+    width: 1rem;
+    height: auto;
+}
+
+.Lists-button {
+    background-color: var(--white-color);
+    border-radius: 0.5rem;
+    border: 2px solid var(--primary-color);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: black;
+}
+
+.Lists-button:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.Lists-delete-action {
+    border: 2px solid var(--warning-color);
+}
+
+.Lists-delete-action:hover {
+    background-color: var(--warning-color);
+    color: white;
+}

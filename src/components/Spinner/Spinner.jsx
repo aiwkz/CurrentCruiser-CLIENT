@@ -1,8 +1,8 @@
 import './Spinner.css';
 
 const Spinner = () => (
-  <div className="spinner-overlay">
-    <div className="spinner-container" />
+  <div className="Spinner-overlay">
+    <div className="Spinner-container" />
   </div>
 );
 

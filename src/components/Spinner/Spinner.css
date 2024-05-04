@@ -1,4 +1,4 @@
-.spinner-overlay {
+.Spinner-overlay {
     height: 60vh;
     width: 100%;
     display: flex;
@@ -6,13 +6,13 @@
     align-items: center;
 }
 
-.spinner-container {
+.Spinner-container {
     display: inline-block;
     width: 3.125rem;
     height: 3.125rem;
-    border: 0.1875rem solid cornflowerblue;
+    border: 0.1875rem solid var(--primary-color);
     border-radius: 50%;
-    border-top-color: #636767;
+    border-top-color: var(--secondary--color);
     animation: spin 1s ease-in-out infinite;
     -webkit-animation: spin 1s ease-in-out infinite;
 }

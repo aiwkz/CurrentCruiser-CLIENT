@@ -1,52 +1,60 @@
 import { createContext, useState, useEffect } from 'react';
 
-import { INITIAL_USER_DATA } from '../constants/constants';
-
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(INITIAL_USER_DATA);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Check if user is already authenticated on initial load
     const token = localStorage.getItem('token');
     const storedUserData = localStorage.getItem('user');
 
-    if (token && storedUserData && !isAuthenticated) {
-      // Parse the stored user data back into an object
-      const userData = JSON.parse(storedUserData);
-      // Set user as authenticated
-      setIsAuthenticated(true);
-      // Set user data
-      setUser(userData);
-    }
+    const fetchUser = async () => {
+      try {
+        if (token && storedUserData) {
+          const userData = JSON.parse(storedUserData);
+          setUser(userData);
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUser();
   }, []);
 
-  const login = (token, userData) => {
-    // Save token to local storage
-    localStorage.setItem('token', token);
-    // Save user data to local storage after stringifying it
-    localStorage.setItem('user', JSON.stringify(userData));
-    // Set user as authenticated
-    setIsAuthenticated(true);
-    // Set user data
+  // Function to update user data
+  const updateUser = (userData) => {
     setUser(userData);
   };
 
-  const logout = () => {
-    // Remove token from local storage
+  // Function to clean user data
+  const cleanUserData = () => {
     localStorage.removeItem('token');
-    // Remove user from local storage
     localStorage.removeItem('user');
-    // Set user as not authenticated
     setIsAuthenticated(false);
-    // Clear user data
     setUser(null);
   };
 
+  const login = (token, userData) => {
+    // Clean user data before setting new data
+    cleanUserData();
+
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(userData));
+    setIsAuthenticated(true);
+    updateUser(userData); // Update user data
+  };
+
+  const logout = async () => {
+    // Clean user data upon logout
+    await cleanUserData();
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
