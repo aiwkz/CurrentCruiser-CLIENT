@@ -15,6 +15,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const { VITE_BACKEND_URL } = import.meta.env;
 
+  console.log('VITE_BACKEND_URL', VITE_BACKEND_URL);
   useEffect(() => {
     // Redirect to home page if user is already authenticated
     if (isAuthenticated) {
