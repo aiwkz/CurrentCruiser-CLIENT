@@ -26,7 +26,6 @@ The client is built using React.js, leveraging modern web development technologi
 -   React.js
 -   React Router
 -   CSS Modules
--   Axios
 
 ## Installation
 
