@@ -13,7 +13,6 @@ import PrivacyPolicy from '@/components/PrivacyPolicy/PrivacyPolicy';
 import './App.css'
 
 const App = () => {
-
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
