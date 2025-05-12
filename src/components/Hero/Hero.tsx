@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Slider from '@/components/Slider/Slider';
-import { CarsContext } from '@/contexts/carsContext';
+import { useCarsStore } from '@/stores/carsStore';
 
 import './Hero.css';
 
 const Hero = (): JSX.Element => {
-    const { cars } = useContext(CarsContext)!;
+    const cars = useCarsStore(state => state.cars);
     const [currentCarIndex, setCurrentCarIndex] = useState<number>(0);
 
     useEffect(() => {

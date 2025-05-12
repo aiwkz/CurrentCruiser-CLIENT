@@ -1,14 +1,15 @@
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { CarsContext } from '@/contexts/carsContext';
+import { useCarsStore } from '@/stores/carsStore';
 import Accordion from '@/components/Accordion/Accordion';
 import { INITIAL_CURRENT_CAR_DATA } from '@/constants/constants';
 
 import './CardDetails.css';
 
 const CardDetails = (): JSX.Element => {
-    const { setCurrentCar, currentCar } = useContext(CarsContext)!;
+    const currentCar = useCarsStore(state => state.currentCar);
+    const setCurrentCar = useCarsStore(state => state.setCurrentCar);
     const navigate = useNavigate();
     const { VITE_BACKEND_URL } = import.meta.env;
 

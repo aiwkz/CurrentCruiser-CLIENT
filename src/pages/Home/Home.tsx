@@ -1,8 +1,8 @@
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { AuthContext } from '@/contexts/authContext';
-import { CarsContext } from '@/contexts/carsContext';
+import { useAuthStore } from '@/stores/authStore';
+import { useCarsStore } from '@/stores/carsStore';
 import Hero from '@/components/Hero/Hero';
 import CardList from '@/components/CardList/CardList';
 import Spinner from '@/components/Spinner/Spinner';
@@ -11,8 +11,8 @@ import { Car } from '@/types';
 import './Home.css';
 
 const Home = () => {
-    const { user } = useContext(AuthContext)!;
-    const { getAllCars, cars } = useContext(CarsContext)!;
+    const { user } = useAuthStore();
+    const { cars, getAllCars } = useCarsStore();
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(true);
     const [carsFasterThan150, setCarsFasterThan150] = useState<Car[]>([]);

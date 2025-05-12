@@ -1,11 +1,11 @@
-import { useState, useContext } from 'react';
-import { CarsContext } from '@/contexts/carsContext';
+import { useState } from 'react';
+import { useCarsStore } from '@/stores/carsStore';
 
 import './Accordion.css';
 
 const Accordion = (): JSX.Element => {
     const [activeTitle, setActiveTitle] = useState<string | null>(null);
-    const { currentCar } = useContext(CarsContext)!;
+    const currentCar = useCarsStore(state => state.currentCar);
     const { history, description } = currentCar;
 
     const handleClick = (title: string) => {

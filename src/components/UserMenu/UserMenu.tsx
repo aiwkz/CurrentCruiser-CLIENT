@@ -5,13 +5,13 @@ import UserProfileIcon from '@/assets/icons/user-profile-icon.svg';
 import ArrowDown from '@/assets/icons/arrow-down-icon.svg';
 import ArrowUp from '@/assets/icons/arrow-up-icon.svg';
 import { MENU_ITEMS } from '@/constants/constants';
-import { AuthContext } from '@/contexts/authContext';
+import { useAuthStore } from '@/stores/authStore';
 
 import './UserMenu.css';
 
 const UserMenu = (): JSX.Element => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { logout, user } = useContext(AuthContext)!;
+    const { logout, user } = useAuthStore();
     const navigate = useNavigate();
     const menuRef = useRef<HTMLDivElement>(null);
 

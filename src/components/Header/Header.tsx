@@ -1,14 +1,13 @@
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import Logo from '@/assets/img/logo.svg';
 import UserMenu from '@/components/UserMenu/UserMenu';
-import { AuthContext } from '@/contexts/authContext';
+import { useAuthStore } from '@/stores/authStore';
 
 import './Header.css';
 
 const Header = (): JSX.Element => {
-    const { isAuthenticated } = useContext(AuthContext)!;
+    const isAuthenticated = useAuthStore(state => state.isAuthenticated);
 
     return (
         <header className='Header'>
