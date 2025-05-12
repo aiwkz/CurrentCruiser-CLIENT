@@ -1,29 +1,32 @@
-import { useContext, useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { CarsContext } from '@/contexts/carsContext';
-import { ListsContext } from '@/contexts/listsContext';
-import { AuthContext } from '@/contexts/authContext';
+import { useCarsStore } from '@/stores/carsStore';
+import { useListsStore } from '@/stores/listsStore';
+import { useAuthStore } from '@/stores/authStore';
 import Button from '@/components/Button/Button';
 import { INITIAL_LIST_FORM_STATE } from '@/constants/constants';
 import { List } from '@/types';
 
 import './CreateListForm.css';
-import { useNavigate } from 'react-router-dom';
 
 interface CreateListFormProps {
     toggleModal: () => void;
 }
 
 const CreateListForm = ({ toggleModal }: CreateListFormProps): JSX.Element => {
-    const { cars } = useContext(CarsContext)!;
-    const { currentlistId, createList, lists, updateList, setLists } =
-        useContext(ListsContext)!;
-    const { user } = useContext(AuthContext)!;
+    const cars = useCarsStore(state => state.cars);
+    const lists = useListsStore(state => state.lists);
+    const setLists = useListsStore(state => state.setLists);
+    const currentListId = useListsStore(state => state.currentListId);
+    const createList = useListsStore(state => state.createList);
+    const updateList = useListsStore(state => state.updateList);
+    const user = useAuthStore(state => state.user);
     const navigate = useNavigate();
 
     const [error, setError] = useState<string | null>(null);
     const [selectedCarIds, setSelectedCarIds] = useState<string[]>([]);
-    const listToEdit = lists.find(list => list._id === currentlistId);
+    const listToEdit = lists.find(list => list._id === currentListId);
     const [formData, setFormData] = useState<List>(
         listToEdit ? listToEdit : INITIAL_LIST_FORM_STATE
     );
@@ -66,10 +69,10 @@ const CreateListForm = ({ toggleModal }: CreateListFormProps): JSX.Element => {
         e.preventDefault();
 
         try {
-            await updateList(currentlistId, formData);
+            await updateList(currentListId, formData);
             setLists(
                 lists.map(list =>
-                    list._id === currentlistId ? formData : list
+                    list._id === currentListId ? formData : list
                 )
             );
             toggleModal();
@@ -127,7 +130,7 @@ const CreateListForm = ({ toggleModal }: CreateListFormProps): JSX.Element => {
                     ))}
                 </select>
             </label>
-            {currentlistId ? (
+            {currentListId ? (
                 <Button
                     type='submit'
                     onClick={handleEdit}

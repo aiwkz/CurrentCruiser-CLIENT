@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext, ChangeEvent, FormEvent } from 'react';
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { AuthContext } from '@/contexts/authContext';
+import { useAuthStore } from '@/stores/authStore';
 import { fetchData } from '@/utils/utils';
 import { INITIAL_REGISTER_FORM_STATE } from '@/constants/constants';
 import Button from '@/components/Button/Button';
@@ -14,7 +14,9 @@ const RegisterForm = (): JSX.Element => {
         INITIAL_REGISTER_FORM_STATE
     );
     const [error, setError] = useState<string | null>(null);
-    const { isAuthenticated, login, logout } = useContext(AuthContext)!;
+    const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+    const login = useAuthStore(state => state.login);
+    const logout = useAuthStore(state => state.logout);
     const navigate = useNavigate();
     const { VITE_BACKEND_URL } = import.meta.env;
 

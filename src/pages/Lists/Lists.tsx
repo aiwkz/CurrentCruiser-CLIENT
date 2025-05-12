@@ -1,15 +1,15 @@
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { AuthContext } from '@/contexts/authContext';
-import { ListsContext } from '@/contexts/listsContext';
-import { CarsContext } from '@/contexts/carsContext';
+import { useAuthStore } from '@/stores/authStore';
+import { useListsStore } from '@/stores/listsStore';
+import { useCarsStore } from '@/stores/carsStore';
 import CardList from '@/components/CardList/CardList';
 import Spinner from '@/components/Spinner/Spinner';
 import Modal from '@/components/Modal/Modal';
 import Button from '@/components/Button/Button';
 
-import { User, List, Car } from '@/types';
+import { Car } from '@/types';
 
 import './Lists.css';
 
@@ -24,16 +24,16 @@ const Lists = (): JSX.Element => {
     const [loading, setLoading] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-    const { user } = useContext(AuthContext)!;
+    const { user } = useAuthStore();
     const {
-        getListsByUserId,
-        getAllLists,
         lists,
         setLists,
         setCurrentListId,
+        getAllLists,
+        getListsByUserId,
         deleteList,
-    } = useContext(ListsContext)!;
-    const { cars, getAllCars } = useContext(CarsContext)!;
+    } = useListsStore();
+    const { cars, getAllCars } = useCarsStore();
     const navigate = useNavigate();
 
     useEffect(() => {

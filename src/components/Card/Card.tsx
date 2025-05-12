@@ -1,7 +1,6 @@
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Car } from '@/types';
-import { CarsContext } from '@/contexts/carsContext';
+import { useCarsStore } from '@/stores/carsStore';
 
 interface CardProps {
     _id: string;
@@ -11,15 +10,10 @@ interface CardProps {
 }
 
 const Card = ({ _id, img, name, description }: CardProps) => {
-    const carsContext = useContext(CarsContext);
+    const cars = useCarsStore(state => state.cars);
+    const setCurrentCar = useCarsStore(state => state.setCurrentCar);
     const navigate = useNavigate();
     const { VITE_BACKEND_URL } = import.meta.env;
-
-    if (!carsContext) {
-        throw new Error('Card must be used within a CarsProvider');
-    }
-
-    const { cars, setCurrentCar } = carsContext;
 
     const handleCardClick = () => {
         const selectedCar = cars.find((car: Car) => car._id === _id);
