@@ -4,23 +4,23 @@ import Card from '@/components/Card/Card';
 import './CardList.css';
 
 interface CardListProps {
-    cars: Car[];
+  cars: Car[];
 }
 
 const CardList = ({ cars }: CardListProps) => {
-    return (
-        <div className='CardList'>
-            {cars.map(car => (
-                <Card
-                    key={car._id}
-                    _id={car._id}
-                    img={car.img}
-                    name={`${car.name}`}
-                    description={car.description}
-                />
-            ))}
-        </div>
-    );
+  return (
+    <div className='CardList'>
+      {cars.map(car => (
+        <Card
+          key={car._id}
+          _id={car._id}
+          img={car.img}
+          name={`${car.name}`}
+          description={car.description}
+        />
+      ))}
+    </div>
+  );
 };
 
 export default CardList;

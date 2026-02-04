@@ -11,62 +11,58 @@ import { Car } from '@/types';
 import './Home.css';
 
 const Home = () => {
-    const { user } = useAuthStore();
-    const { cars, getAllCars } = useCarsStore();
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState<boolean>(true);
-    const [carsFasterThan150, setCarsFasterThan150] = useState<Car[]>([]);
-    const [carsNotOnTheMarket, setCarsNotOnTheMarket] = useState<Car[]>([]);
+  const { user } = useAuthStore();
+  const { cars, getAllCars } = useCarsStore();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [carsFasterThan150, setCarsFasterThan150] = useState<Car[]>([]);
+  const [carsNotOnTheMarket, setCarsNotOnTheMarket] = useState<Car[]>([]);
 
-    useEffect(() => {
-        if (!user) {
-            navigate('/login');
-        } else {
-            getAllCars();
-        }
-    }, [user]);
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    } else {
+      getAllCars();
+    }
+  }, [user, navigate, getAllCars]);
 
-    useEffect(() => {
-        if (cars.length > 0) {
-            const fasterThan150 = cars.filter((car: Car) => {
-                const topSpeed = parseInt(car.specifications.topSpeed);
-                return topSpeed > 150;
-            });
-            setCarsFasterThan150(fasterThan150);
+  useEffect(() => {
+    if (cars.length > 0) {
+      const fasterThan150 = cars.filter((car: Car) => {
+        const topSpeed = parseInt(car.specifications.topSpeed);
+        return topSpeed > 150;
+      });
+      setCarsFasterThan150(fasterThan150);
 
-            const notOnMarket = cars.filter(
-                (car: Car) => !car.availableInMarket
-            );
-            setCarsNotOnTheMarket(notOnMarket);
+      const notOnMarket = cars.filter((car: Car) => !car.availableInMarket);
+      setCarsNotOnTheMarket(notOnMarket);
 
-            setLoading(false);
-        }
-    }, [cars]);
+      setLoading(false);
+    }
+  }, [cars]);
 
-    return (
-        <div className='Home'>
-            {loading ? (
-                <Spinner />
-            ) : (
-                <>
-                    <Hero />
-                    <div className='Home-content'>
-                        <div className='Home-section'>
-                            <h2>Check the fastest Ev's</h2>
-                            <CardList cars={carsFasterThan150} />
-                        </div>
+  return (
+    <div className='Home'>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <Hero />
+          <div className='Home-content'>
+            <div className='Home-section'>
+              <h2>Check the fastest Ev's</h2>
+              <CardList cars={carsFasterThan150} />
+            </div>
 
-                        <div>
-                            <h2>
-                                Explore the amazing cars that can't be bought
-                            </h2>
-                            <CardList cars={carsNotOnTheMarket} />
-                        </div>
-                    </div>
-                </>
-            )}
-        </div>
-    );
+            <div>
+              <h2>Explore the amazing cars that can't be bought</h2>
+              <CardList cars={carsNotOnTheMarket} />
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
 
 export default Home;

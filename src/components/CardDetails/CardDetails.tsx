@@ -8,66 +8,61 @@ import { INITIAL_CURRENT_CAR_DATA } from '@/constants/constants';
 import './CardDetails.css';
 
 const CardDetails = (): JSX.Element => {
-    const currentCar = useCarsStore(state => state.currentCar);
-    const setCurrentCar = useCarsStore(state => state.setCurrentCar);
-    const navigate = useNavigate();
-    const { VITE_BACKEND_URL } = import.meta.env;
+  const currentCar = useCarsStore(state => state.currentCar);
+  const setCurrentCar = useCarsStore(state => state.setCurrentCar);
+  const navigate = useNavigate();
+  const { VITE_BACKEND_URL } = import.meta.env;
 
-    useEffect(() => {
-        if (currentCar._id === '') {
-            navigate('/');
-        }
-    }, [currentCar._id, navigate]);
+  useEffect(() => {
+    if (currentCar._id === '') {
+      navigate('/');
+    }
+  }, [currentCar._id, navigate]);
 
-    const handleBackClick = () => {
-        navigate('/');
-        setCurrentCar(INITIAL_CURRENT_CAR_DATA);
-    };
+  const handleBackClick = () => {
+    navigate('/');
+    setCurrentCar(INITIAL_CURRENT_CAR_DATA);
+  };
 
-    return (
-        <div className='CardDetails'>
-            <div className='CardDetails-name'>
-                <span
-                    className='CardDetails-back-action'
-                    onClick={handleBackClick}
+  return (
+    <div className='CardDetails'>
+      <div className='CardDetails-name'>
+        <span className='CardDetails-back-action' onClick={handleBackClick}>
+          {'<-'}
+        </span>
+        {currentCar.name}
+      </div>
+
+      <div className='CardDetails-content-container'>
+        <div className='CardDetails-img-specifications-container'>
+          <img
+            alt='Car image'
+            className='CardDetails-img'
+            src={`${VITE_BACKEND_URL}/${currentCar.img}`}
+          />
+
+          <div className='CardDetails-title-specifications-container'>
+            <h3 className='CardDetails-specifications-title'>
+              Car specifications
+            </h3>
+            {Object.entries(currentCar.specifications).map(
+              ([key, value], index) => (
+                <div
+                  className='CardDetails-specifications-container'
+                  key={index}
                 >
-                    {'<-'}
-                </span>
-                {currentCar.name}
-            </div>
-
-            <div className='CardDetails-content-container'>
-                <div className='CardDetails-img-specifications-container'>
-                    <img
-                        alt='Car image'
-                        className='CardDetails-img'
-                        src={`${VITE_BACKEND_URL}/${currentCar.img}`}
-                    />
-
-                    <div className='CardDetails-title-specifications-container'>
-                        <h3 className='CardDetails-specifications-title'>
-                            Car specifications
-                        </h3>
-                        {Object.entries(currentCar.specifications).map(
-                            ([key, value], index) => (
-                                <div
-                                    className='CardDetails-specifications-container'
-                                    key={index}
-                                >
-                                    <span className='CardDetails-specification-key'>
-                                        {key}:
-                                    </span>{' '}
-                                    <span>{value}</span>
-                                </div>
-                            )
-                        )}
-                    </div>
+                  <span className='CardDetails-specification-key'>{key}:</span>{' '}
+                  <span>{value}</span>
                 </div>
-
-                <Accordion />
-            </div>
+              )
+            )}
+          </div>
         </div>
-    );
+
+        <Accordion />
+      </div>
+    </div>
+  );
 };
 
 export default CardDetails;

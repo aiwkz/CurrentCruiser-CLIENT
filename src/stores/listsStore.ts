@@ -22,16 +22,16 @@ export const useListsStore = create<ListsState>((set, get) => ({
   currentListId: '',
   error: null,
 
-  setLists: (lists) => set({ lists }),
-  setCurrentListId: (id) => set({ currentListId: id }),
+  setLists: lists => set({ lists }),
+  setCurrentListId: id => set({ currentListId: id }),
 
-  createList: async (newList) => {
+  createList: async newList => {
     try {
       await fetchData<{ list: List }>({
         url: `${import.meta.env.VITE_BACKEND_URL}/lists/create`,
         method: 'POST',
         body: newList,
-        callback: (response) => set({ lists: [...get().lists, response.list] }),
+        callback: response => set({ lists: [...get().lists, response.list] }),
       });
     } catch (error) {
       set({ error });
@@ -42,29 +42,29 @@ export const useListsStore = create<ListsState>((set, get) => ({
     try {
       await fetchData<{ lists: List[] }>({
         url: `${import.meta.env.VITE_BACKEND_URL}/lists/all`,
-        callback: (response) => set({ lists: response.lists }),
+        callback: response => set({ lists: response.lists }),
       });
     } catch (error) {
       set({ error });
     }
   },
 
-  getListById: async (id) => {
+  getListById: async id => {
     try {
       await fetchData<{ list: List }>({
         url: `${import.meta.env.VITE_BACKEND_URL}/lists/${id}`,
-        callback: (response) => set({ lists: [response.list] }),
+        callback: response => set({ lists: [response.list] }),
       });
     } catch (error) {
       set({ error });
     }
   },
 
-  getListsByUserId: async (userId) => {
+  getListsByUserId: async userId => {
     try {
       await fetchData<{ lists: List[] }>({
         url: `${import.meta.env.VITE_BACKEND_URL}/lists/user/${userId}`,
-        callback: (response) => set({ lists: response.lists }),
+        callback: response => set({ lists: response.lists }),
       });
     } catch (error) {
       set({ error });
@@ -77,7 +77,7 @@ export const useListsStore = create<ListsState>((set, get) => ({
         url: `${import.meta.env.VITE_BACKEND_URL}/lists/${id}`,
         method: 'PUT',
         body: updatedList,
-        callback: (response) => {
+        callback: response => {
           set({
             lists: get().lists.map(list =>
               list._id === id ? response.list : list
@@ -90,7 +90,7 @@ export const useListsStore = create<ListsState>((set, get) => ({
     }
   },
 
-  deleteList: async (id) => {
+  deleteList: async id => {
     try {
       await fetchData({
         url: `${import.meta.env.VITE_BACKEND_URL}/lists/${id}`,

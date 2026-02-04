@@ -24,7 +24,7 @@ export const fetchData = async <T>({
     method,
     headers: {
       'Content-Type': 'application/json',
-      ...(token ? { 'Authorization': token } : {}),
+      ...(token ? { Authorization: token } : {}),
     },
     signal: controller.signal,
   };

@@ -21,27 +21,27 @@ export const useCarsStore = create<CarsState>((set, get) => ({
   currentCar: INITIAL_CURRENT_CAR_DATA,
   error: null,
 
-  setCars: (cars) => set({ cars }),
-  setCurrentCar: (car) => set({ currentCar: car }),
+  setCars: cars => set({ cars }),
+  setCurrentCar: car => set({ currentCar: car }),
 
   getAllCars: async () => {
     try {
       await fetchData<{ cars: Car[] }>({
         url: `${import.meta.env.VITE_BACKEND_URL}/cars/all`,
-        callback: (response) => set({ cars: response.cars }),
+        callback: response => set({ cars: response.cars }),
       });
     } catch (error) {
       set({ error });
     }
   },
 
-  addCar: async (newCar) => {
+  addCar: async newCar => {
     try {
       await fetchData<{ car: Car }>({
         url: `${import.meta.env.VITE_BACKEND_URL}/cars/create`,
         method: 'POST',
         body: newCar,
-        callback: (response) => set({ cars: [...get().cars, response.car] }),
+        callback: response => set({ cars: [...get().cars, response.car] }),
       });
     } catch (error) {
       set({ error });
@@ -54,11 +54,9 @@ export const useCarsStore = create<CarsState>((set, get) => ({
         url: `${import.meta.env.VITE_BACKEND_URL}/cars/${id}`,
         method: 'PUT',
         body: updatedCar,
-        callback: (response) => {
+        callback: response => {
           set({
-            cars: get().cars.map(car =>
-              car._id === id ? response.car : car
-            ),
+            cars: get().cars.map(car => (car._id === id ? response.car : car)),
           });
         },
       });
@@ -67,7 +65,7 @@ export const useCarsStore = create<CarsState>((set, get) => ({
     }
   },
 
-  deleteCar: async (id) => {
+  deleteCar: async id => {
     try {
       await fetchData({
         url: `${import.meta.env.VITE_BACKEND_URL}/cars/${id}`,

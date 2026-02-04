@@ -6,15 +6,15 @@ import Footer from '@/components/Footer/Footer';
 import './DefaultLayout.css';
 
 const DefaultLayout = (): JSX.Element => {
-    return (
-        <>
-            <Header />
-            <div className='content'>
-                <Outlet />
-            </div>
-            <Footer />
-        </>
-    );
+  return (
+    <>
+      <Header />
+      <div className='content'>
+        <Outlet />
+      </div>
+      <Footer />
+    </>
+  );
 };
 
 export default DefaultLayout;
