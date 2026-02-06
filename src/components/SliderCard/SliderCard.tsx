@@ -20,7 +20,7 @@ const SliderCard = ({
       <img
         alt='Car image'
         className='SliderCard-img'
-        src={`${VITE_BACKEND_URL}/${img}`}
+        src={`${VITE_BACKEND_URL}/assets/images/${img}`}
       />
       <div className='SliderCard-name-history-container'>
         <h2 className='SliderCard-name'>{name}</h2>

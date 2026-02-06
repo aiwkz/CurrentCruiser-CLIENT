@@ -13,7 +13,7 @@ const CardList = ({ cars }: CardListProps) => {
       {cars.map(car => (
         <Card
           key={car._id}
-          _id={car._id}
+          id={car._id}
           img={car.img}
           name={`${car.name}`}
           description={car.description}

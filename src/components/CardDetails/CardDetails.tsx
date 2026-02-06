@@ -38,7 +38,7 @@ const CardDetails = (): JSX.Element => {
           <img
             alt='Car image'
             className='CardDetails-img'
-            src={`${VITE_BACKEND_URL}/${currentCar.img}`}
+            src={`${VITE_BACKEND_URL}/assets/images/${currentCar.img}`}
           />
 
           <div className='CardDetails-title-specifications-container'>
