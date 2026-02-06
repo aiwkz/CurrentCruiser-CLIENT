@@ -1,45 +1,45 @@
 .SliderCard {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1.5rem;
-    min-height: 12rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  min-height: 12rem;
 }
 
 .SliderCard-name-history-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 1rem;
 }
 
 .SliderCard-img {
-    width: auto;
-    height: 15rem;
-    border-radius: 0 5rem 5rem 0;
+  width: auto;
+  height: 15rem;
+  border-radius: 0 5rem 5rem 0;
 }
 
 .SliderCard-name {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 .SliderCard-name,
 .SliderCard-history {
-    color: var(--white-color);
+  color: var(--white-color);
 }
 
 @media (max-width: 768px) {
-    .SliderCard {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 1.5rem;
-    }
+  .SliderCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+  }
 
-    .SliderCard-img {
-        max-height: 12rem;
-        border-radius: 1rem;
-    }
+  .SliderCard-img {
+    max-height: 12rem;
+    border-radius: 1rem;
+  }
 }
