@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAuthStore } from '@/stores/authStore';
@@ -20,20 +20,16 @@ interface UserList {
 }
 
 const Lists = (): JSX.Element => {
-  const [userLists, setUserLists] = useState<UserList[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { user } = useAuthStore();
-  const {
-    lists,
-    setLists,
-    setCurrentListId,
-    getAllLists,
-    getListsByUserId,
-    deleteList,
-  } = useListsStore();
+  const user = useAuthStore(state => state.user);
+
+  const { lists, setCurrentListId, getAllLists, getListsByUserId, deleteList } =
+    useListsStore();
+
   const { cars, getAllCars } = useCarsStore();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,41 +38,43 @@ const Lists = (): JSX.Element => {
       return;
     }
 
-    setLoading(true);
-    setLists([]);
-    getAllCars();
+    let cancelled = false;
 
-    if (user.role === 'admin') {
-      getAllLists();
-    } else {
-      getListsByUserId(user._id);
-    }
-  }, [user, navigate, setLists, getAllCars, getAllLists, getListsByUserId]);
+    (async () => {
+      setLoading(true);
+      try {
+        // fetch cars + lists in parallel
+        await Promise.all([
+          getAllCars(),
+          user.role === 'admin' ? getAllLists() : getListsByUserId(user._id),
+        ]);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
 
-  useEffect(() => {
-    setUserLists([]);
+    return () => {
+      cancelled = true;
+    };
+  }, [user, navigate, getAllCars, getAllLists, getListsByUserId]);
 
-    if (lists && lists.length > 0 && cars.length > 0) {
-      const userListsWithCars: UserList[] = lists.map(list => {
-        const carsInList = cars.filter(car =>
-          list.cars.map(c => c._id).includes(car._id)
-        );
-        return {
-          id: list._id,
-          listTitle: list.title,
-          cars: carsInList,
-        };
-      });
-      setUserLists(userListsWithCars);
-      setLoading(false);
-    } else {
-      setUserLists([]);
-      setLoading(false);
-    }
+  const userLists: UserList[] = useMemo(() => {
+    if (!lists?.length || !cars.length) return [];
+
+    // build a quick lookup map so we don't do O(n*m) filtering repeatedly
+    const carsById = new Map(cars.map(car => [car._id, car]));
+
+    return lists.map(list => ({
+      id: list._id,
+      listTitle: list.title,
+      cars: list.cars
+        .map(c => carsById.get(c._id))
+        .filter((c): c is Car => Boolean(c)),
+    }));
   }, [lists, cars]);
 
   const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+    setIsModalOpen(prev => !prev);
   };
 
   const handleEdit = (id: string) => {
@@ -88,11 +86,8 @@ const Lists = (): JSX.Element => {
     try {
       await deleteList(id);
     } catch (error) {
-      if (error instanceof Error) {
-        console.error('Fetch error:', error.message);
-      } else {
-        console.error('Fetch error:', error);
-      }
+      if (error instanceof Error) console.error('Fetch error:', error.message);
+      else console.error('Fetch error:', error);
     }
   };
 
@@ -113,12 +108,14 @@ const Lists = (): JSX.Element => {
           <div key={list.id} className='Lists-list-container'>
             <div className='Lists-action-buttons-container'>
               <h3>{list.listTitle}</h3>
+
               <span
                 className='Lists-button'
                 onClick={() => handleEdit(list.id)}
               >
                 Edit List
               </span>
+
               <button
                 className='Lists-button Lists-delete-action'
                 onClick={() => handleDelete(list.id)}
