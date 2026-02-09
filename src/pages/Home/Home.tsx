@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAuthStore } from '@/stores/authStore';
@@ -11,34 +11,43 @@ import { Car } from '@/types';
 import './Home.css';
 
 const Home = () => {
-  const { user } = useAuthStore();
+  const user = useAuthStore(state => state.user);
   const { cars, getAllCars } = useCarsStore();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [carsFasterThan150, setCarsFasterThan150] = useState<Car[]>([]);
-  const [carsNotOnTheMarket, setCarsNotOnTheMarket] = useState<Car[]>([]);
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user) {
       navigate('/login');
-    } else {
-      getAllCars();
+      return;
     }
+
+    let cancelled = false;
+
+    (async () => {
+      setLoading(true);
+      try {
+        await getAllCars();
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
   }, [user, navigate, getAllCars]);
 
-  useEffect(() => {
-    if (cars.length > 0) {
-      const fasterThan150 = cars.filter((car: Car) => {
-        const topSpeed = parseInt(car.specifications.topSpeed);
-        return topSpeed > 150;
-      });
-      setCarsFasterThan150(fasterThan150);
+  const carsFasterThan150 = useMemo(() => {
+    return cars.filter((car: Car) => {
+      const topSpeed = Number.parseInt(car.specifications.topSpeed, 10);
+      return Number.isFinite(topSpeed) && topSpeed > 150;
+    });
+  }, [cars]);
 
-      const notOnMarket = cars.filter((car: Car) => !car.availableInMarket);
-      setCarsNotOnTheMarket(notOnMarket);
-
-      setLoading(false);
-    }
+  const carsNotOnTheMarket = useMemo(() => {
+    return cars.filter((car: Car) => !car.availableInMarket);
   }, [cars]);
 
   return (
@@ -47,15 +56,15 @@ const Home = () => {
         <Spinner />
       ) : (
         <>
-          <Hero />
+          <Hero key={cars.length} />
           <div className='Home-content'>
             <div className='Home-section'>
-              <h2>Check the fastest Ev's</h2>
+              <h2>Check the fastest EVs</h2>
               <CardList cars={carsFasterThan150} />
             </div>
 
             <div>
-              <h2>Explore the amazing cars that can't be bought</h2>
+              <h2>Explore the amazing cars that can&apos;t be bought</h2>
               <CardList cars={carsNotOnTheMarket} />
             </div>
           </div>

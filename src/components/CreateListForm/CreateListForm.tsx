@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useMemo, useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useCarsStore } from '@/stores/carsStore';
@@ -16,68 +16,72 @@ interface CreateListFormProps {
 
 const CreateListForm = ({ toggleModal }: CreateListFormProps): JSX.Element => {
   const cars = useCarsStore(state => state.cars);
+
   const lists = useListsStore(state => state.lists);
   const setLists = useListsStore(state => state.setLists);
   const currentListId = useListsStore(state => state.currentListId);
   const createList = useListsStore(state => state.createList);
   const updateList = useListsStore(state => state.updateList);
+
   const user = useAuthStore(state => state.user);
   const navigate = useNavigate();
 
+  const listToEdit = useMemo(
+    () => lists.find(list => list._id === currentListId),
+    [lists, currentListId]
+  );
+
   const [error, setError] = useState<string | null>(null);
-  const [selectedCarIds, setSelectedCarIds] = useState<string[]>([]);
-  const listToEdit = lists.find(list => list._id === currentListId);
-  const [formData, setFormData] = useState<List>(
-    listToEdit ? listToEdit : INITIAL_LIST_FORM_STATE
+
+  const [title, setTitle] = useState(
+    () => listToEdit?.title ?? INITIAL_LIST_FORM_STATE.title
+  );
+  const [selectedCarIds, setSelectedCarIds] = useState<string[]>(
+    () => listToEdit?.cars.map(car => car._id) ?? []
   );
 
   useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    }
+    if (!user) navigate('/login');
   }, [user, navigate]);
 
-  useEffect(() => {
-    if (listToEdit) {
-      setSelectedCarIds(listToEdit.cars.map(car => car._id));
-    }
-  }, [listToEdit]);
+  const selectedCars = useMemo(
+    () => cars.filter(car => selectedCarIds.includes(car._id)),
+    [cars, selectedCarIds]
+  );
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
   };
 
   const handleCarSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
-    const updatedSelectedCarIds = selectedCarIds.includes(value)
-      ? selectedCarIds.filter(id => id !== value)
-      : [...selectedCarIds, value];
-    setSelectedCarIds(updatedSelectedCarIds);
 
-    setFormData({
-      ...formData,
-      userId: user!._id,
-      cars: cars.filter(car => updatedSelectedCarIds.includes(car._id)),
-    });
+    setSelectedCarIds(prev =>
+      prev.includes(value) ? prev.filter(id => id !== value) : [...prev, value]
+    );
   };
+
+  const buildPayload = (): List => ({
+    ...(listToEdit ?? INITIAL_LIST_FORM_STATE),
+    title,
+    userId: user!._id,
+    cars: selectedCars,
+  });
 
   const handleEdit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      await updateList(currentListId, formData);
+      const payload = buildPayload();
+      await updateList(currentListId, payload);
+
       setLists(
-        lists.map(list => (list._id === currentListId ? formData : list))
+        lists.map(list => (list._id === currentListId ? payload : list))
       );
+
       toggleModal();
-      setFormData(INITIAL_LIST_FORM_STATE);
-      setSelectedCarIds([]);
-    } catch (error) {
-      console.error('Fetch error:', (error as Error).message);
+    } catch (err) {
+      console.error('Fetch error:', (err as Error).message);
       setError('An error occurred while editing list');
     }
   };
@@ -87,12 +91,12 @@ const CreateListForm = ({ toggleModal }: CreateListFormProps): JSX.Element => {
     setError(null);
 
     try {
-      await createList(formData);
+      const payload = buildPayload();
+      await createList(payload);
+
       toggleModal();
-      setFormData(INITIAL_LIST_FORM_STATE);
-      setSelectedCarIds([]);
-    } catch (error) {
-      console.error('Fetch error:', (error as Error).message);
+    } catch (err) {
+      console.error('Fetch error:', (err as Error).message);
       setError('An error occurred while creating list');
     }
   };
@@ -104,11 +108,12 @@ const CreateListForm = ({ toggleModal }: CreateListFormProps): JSX.Element => {
         <input
           type='text'
           name='title'
-          value={formData.title}
-          onChange={handleChange}
+          value={title}
+          onChange={handleTitleChange}
           required
         />
       </label>
+
       <label className='CreateListForm-input'>
         <h3>Select Cars</h3>
         <select
@@ -125,6 +130,7 @@ const CreateListForm = ({ toggleModal }: CreateListFormProps): JSX.Element => {
           ))}
         </select>
       </label>
+
       {currentListId ? (
         <Button type='submit' onClick={handleEdit}>
           Edit
@@ -134,6 +140,7 @@ const CreateListForm = ({ toggleModal }: CreateListFormProps): JSX.Element => {
           Create List
         </Button>
       )}
+
       {error && <div className='CreateListForm-error'>{error}</div>}
     </form>
   );
