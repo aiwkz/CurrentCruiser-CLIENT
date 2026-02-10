@@ -1,87 +1,103 @@
-.UserMenu-icons-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.7rem;
-    cursor: pointer;
+.UserMenu {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Trigger button (replaces your icons-container) */
+.UserMenu-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  cursor: pointer;
+
+  padding: 0.5rem 0.625rem;
+  border-radius: 0.75rem;
+  border: 1px solid transparent;
+  background: transparent;
+}
+
+.UserMenu-trigger:hover {
+  background: #f8fafc;
+  border-color: #e5e7eb;
 }
 
 .UserMenu-profile-icon {
-    width: 2.5rem;
-    height: auto;
+  width: 1.75rem;
+  height: 1.75rem;
+  display: block;
 }
 
 .UserMenu-username {
-    font-weight: bold;
-    color: var(--secondary-color);
-}
-
-.UserMenu-username:hover {
-    color: var(--accent-color);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #0f172a;
 }
 
 .UserMenu-open-close-menu-icon {
-    width: 0.8rem;
-    height: auto;
+  width: 0.75rem;
+  height: auto;
+  display: block;
 }
 
-.UserMenu-ul {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    list-style: none;
-}
-
-.UserMenu-link:hover {
-    color: var(--secondary-color);
-}
-
-.UserMenu-logout {
-    color: var(--white-color);
-    cursor: pointer;
-}
-
-.UserMenu-logout:hover {
-    color: var(--secondary-color);
-}
-
-.UserMenu-li {
-    font-size: 1rem;
-    font-weight: bold;
-}
-
+/* Dropdown container */
 .UserMenu-nav {
-    display: none;
-}
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
 
-.UserMenu-link {
-    color: var(--white-color);
-    text-decoration: none;
-}
-
-.UserMenu-icons-container.isOpen {
-    position: fixed;
-    top: 2.35rem;
-    right: 4rem;
-    z-index: 2;
+  min-width: 10rem;
+  width: auto;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.75rem 1.875rem rgba(2, 6, 23, 0.12);
+  overflow: hidden;
+  z-index: 100;
 }
 
 .UserMenu-nav.isOpen {
-    display: flex;
-    right: 0;
+  display: block;
 }
 
-.UserMenu-ul.isOpen {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 6rem;
-    right: 0;
-    width: 13rem;
-    height: 20%;
-    background-color: var(--primary-color);
-    transition: left 0.3s ease-in-out;
-    z-index: 1;
+.UserMenu-ul {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.UserMenu-li {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.UserMenu-link,
+.UserMenu-logout {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+
+  padding: 0.625rem 0.625rem;
+  border-radius: 0.5rem;
+
+  color: #0f172a;
+  text-decoration: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.UserMenu-link:hover,
+.UserMenu-logout:hover {
+  background: #f8fafc;
+}
+
+.UserMenu-logout:hover {
+  color: #b91c1c;
 }

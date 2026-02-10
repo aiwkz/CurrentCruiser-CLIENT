@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import Logo from '@/assets/img/logo.svg';
 import UserMenu from '@/components/UserMenu/UserMenu';
@@ -11,13 +11,31 @@ const Header = (): JSX.Element => {
 
   return (
     <header className='Header'>
-      <h1>
-        <Link to='/'>
-          <img className='Header-logo' alt='Logo' src={Logo} />
-        </Link>
-      </h1>
+      <div className='Header-inner'>
+        <div className='Header-left'>
+          <Link
+            to='/'
+            className='Header-brand'
+            aria-label='CurrentCruiser Home'
+          >
+            <img className='Header-logo' alt='CurrentCruiser logo' src={Logo} />
+            <span className='Header-brandText'>CurrentCruiser</span>
+          </Link>
+        </div>
 
-      {isAuthenticated && <UserMenu />}
+        <nav className='Header-nav' aria-label='Primary'>
+          <NavLink
+            to='/lists'
+            className={({ isActive }) =>
+              `Header-navLink${isActive ? ' Header-navLink--active' : ''}`
+            }
+          >
+            Lists
+          </NavLink>
+        </nav>
+
+        <div className='Header-right'>{isAuthenticated && <UserMenu />}</div>
+      </div>
     </header>
   );
 };

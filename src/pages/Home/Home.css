@@ -1,10 +1,20 @@
 .Home-content {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding-top: 2rem;
 }
 
 .Home-section {
-    margin-block: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.Home-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02rem;
+  color: #0f172a;
+  margin: 0;
 }

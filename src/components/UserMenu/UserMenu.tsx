@@ -10,7 +10,7 @@ import { useAuthStore } from '@/stores/authStore';
 import './UserMenu.css';
 
 const UserMenu = (): JSX.Element => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { logout, user } = useAuthStore();
   const navigate = useNavigate();
   const menuRef = useRef<HTMLDivElement>(null);
@@ -21,27 +21,29 @@ const UserMenu = (): JSX.Element => {
   };
 
   useEffect(() => {
-    const listener = (event: Event) => {
+    const listener = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
     document.addEventListener('mousedown', listener);
-    return () => {
-      document.removeEventListener('mousedown', listener);
-    };
+    return () => document.removeEventListener('mousedown', listener);
   }, []);
 
   return (
     <div className='UserMenu' ref={menuRef}>
-      <div
-        className={`UserMenu-icons-container ${isOpen ? 'isOpen' : ''}`}
-        onClick={() => setIsOpen(!isOpen)}
+      <button
+        type='button'
+        className={`UserMenu-trigger ${isOpen ? 'isOpen' : ''}`}
+        onClick={() => setIsOpen(v => !v)}
+        aria-haspopup='menu'
+        aria-expanded={isOpen}
       >
         <img
           className='UserMenu-profile-icon'
-          alt='User profile icon'
+          alt=''
           src={UserProfileIcon}
+          aria-hidden='true'
         />
 
         {user?.username && (
@@ -50,23 +52,26 @@ const UserMenu = (): JSX.Element => {
 
         <img
           className='UserMenu-open-close-menu-icon'
-          alt='Open/Close menu icon'
-          src={isOpen ? ArrowDown : ArrowUp}
+          alt=''
+          src={isOpen ? ArrowUp : ArrowDown}
+          aria-hidden='true'
         />
-      </div>
+      </button>
 
-      <nav className={`UserMenu-nav ${isOpen ? 'isOpen' : ''}`}>
-        <ul className={`UserMenu-ul ${isOpen ? 'isOpen' : ''}`}>
-          {MENU_ITEMS.map(({ id, title, href }) => (
-            <li className='UserMenu-li' key={id}>
-              <Link to={href} className='UserMenu-link'>
-                {title.toUpperCase()}
-              </Link>
-            </li>
-          ))}
-
-          <li className='UserMenu-logout UserMenu-li' onClick={handleLogout}>
-            LOGOUT
+      <nav
+        className={`UserMenu-nav ${isOpen ? 'isOpen' : ''}`}
+        aria-label='User menu'
+      >
+        <ul className='UserMenu-ul' role='menu'>
+          <li className='UserMenu-li' role='none'>
+            <button
+              type='button'
+              className='UserMenu-logout'
+              role='menuitem'
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
           </li>
         </ul>
       </nav>

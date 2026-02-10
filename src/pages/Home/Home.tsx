@@ -44,16 +44,19 @@ const Home = () => {
       ) : (
         <>
           <Hero key={cars.length} />
-          <div className='Home-content'>
-            <div className='Home-section'>
-              <h2>Check the fastest EVs</h2>
-              <CardList cars={carsFasterThan150} />
-            </div>
 
-            <div>
-              <h2>Explore the amazing cars that can&apos;t be bought</h2>
+          <div className='Home-content'>
+            <section className='Home-section'>
+              <h2 className='Home-title'>Check the fastest EVs</h2>
+              <CardList cars={carsFasterThan150} />
+            </section>
+
+            <section className='Home-section'>
+              <h2 className='Home-title'>
+                Explore the amazing cars that can&apos;t be bought
+              </h2>
               <CardList cars={carsNotOnTheMarket} />
-            </div>
+            </section>
           </div>
         </>
       )}

@@ -1,56 +1,182 @@
 .CardDetails {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
+  width: 100%;
 }
 
-.CardDetails-name,
-.CardDetails-back-action {
-    font-size: 2rem;
-    font-weight: bold;
+.CardDetails-container {
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.CardDetails-back-action {
-    cursor: pointer;
-    margin-right: 1rem;
-    color: var(--secondary-color);
+.CardDetails-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.CardDetails-back-action:hover {
-    color: var(--accent-color);
+.CardDetails-back {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #0f172a;
 }
 
-.CardDetails-content-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
+.CardDetails-back:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
 }
 
-.CardDetails-img-specifications-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+.CardDetails-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.03rem;
+  color: #0f172a;
 }
 
-.CardDetails-title-specifications-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: left;
-    margin-left: 1rem;
+.CardDetails-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
 }
 
-.CardDetails-specifications-title {
-    font-size: 1.5rem;
+@media (min-width: 60rem) {
+  .CardDetails-main {
+    grid-template-columns: 1.6fr 1fr;
+    align-items: start;
+  }
 }
 
-.CardDetails-specification-key {
-    font-weight: bold;
-    text-transform: capitalize;
+.CardDetails-mediaCard,
+.CardDetails-infoCard {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  box-shadow: 0 0.6rem 1.6rem rgba(2, 6, 23, 0.06);
+}
+
+/* Image */
+.CardDetails-imageWrap {
+  padding: 1rem;
+}
+
+.CardDetails-img {
+  width: 100%;
+  height: 18rem;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 0.9rem;
+  display: block;
+}
+
+@media (min-width: 60rem) {
+  .CardDetails-img {
+    height: 22rem;
+  }
+}
+
+/* Tabs */
+.CardDetails-infoCard {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.CardDetails-tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+}
+
+.CardDetails-tab {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  font-size: 0.9rem;
+  font-weight: 900;
+  color: #64748b;
+
+  padding: 0.5rem 0.25rem;
+  border-bottom: 0.15rem solid transparent;
+}
+
+.CardDetails-tab:hover {
+  color: #0f172a;
+}
+
+.CardDetails-tab.isActive {
+  color: #0f172a;
+  border-bottom-color: #2563eb;
+}
+
+.CardDetails-panelTitle {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -0.02rem;
+}
+
+.CardDetails-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.CardDetails-text {
+  margin: 0;
+  color: #334155;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+/* Specs (Overview tab) */
+.CardDetails-specsGrid {
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.CardDetails-specRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.75rem;
+  background: #f8fafc;
+  border: 1px solid #eef2f7;
+}
+
+.CardDetails-specKey {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #334155;
+}
+
+.CardDetails-specValue {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #0f172a;
+  text-align: right;
 }
