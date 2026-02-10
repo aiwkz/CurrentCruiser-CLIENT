@@ -20,15 +20,20 @@ interface UserList {
 }
 
 const Lists = (): JSX.Element => {
-  const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const user = useAuthStore(state => state.user);
 
-  const { lists, setCurrentListId, getAllLists, getListsByUserId, deleteList } =
-    useListsStore();
+  const lists = useListsStore(state => state.lists);
+  const setCurrentListId = useListsStore(state => state.setCurrentListId);
+  const getAllLists = useListsStore(state => state.getAllLists);
+  const getListsByUserId = useListsStore(state => state.getListsByUserId);
+  const deleteList = useListsStore(state => state.deleteList);
+  const isLoadingLists = useListsStore(state => state.isLoading);
 
-  const { cars, getAllCars } = useCarsStore();
+  const cars = useCarsStore(state => state.cars);
+  const getAllCars = useCarsStore(state => state.getAllCars);
+  const isLoadingCars = useCarsStore(state => state.isLoading);
 
   const navigate = useNavigate();
 
@@ -38,30 +43,14 @@ const Lists = (): JSX.Element => {
       return;
     }
 
-    let cancelled = false;
-
-    (async () => {
-      setLoading(true);
-      try {
-        // fetch cars + lists in parallel
-        await Promise.all([
-          getAllCars(),
-          user.role === 'admin' ? getAllLists() : getListsByUserId(user._id),
-        ]);
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
+    getAllCars();
+    if (user.role === 'admin') getAllLists();
+    else getListsByUserId(user._id);
   }, [user, navigate, getAllCars, getAllLists, getListsByUserId]);
 
   const userLists: UserList[] = useMemo(() => {
-    if (!lists?.length || !cars.length) return [];
+    if (!lists.length || !cars.length) return [];
 
-    // build a quick lookup map so we don't do O(n*m) filtering repeatedly
     const carsById = new Map(cars.map(car => [car._id, car]));
 
     return lists.map(list => ({
@@ -83,13 +72,10 @@ const Lists = (): JSX.Element => {
   };
 
   const handleDelete = async (id: string) => {
-    try {
-      await deleteList(id);
-    } catch (error) {
-      if (error instanceof Error) console.error('Fetch error:', error.message);
-      else console.error('Fetch error:', error);
-    }
+    await deleteList(id);
   };
+
+  const loading = isLoadingCars || isLoadingLists;
 
   return (
     <div className='Lists'>

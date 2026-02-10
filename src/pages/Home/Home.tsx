@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAuthStore } from '@/stores/authStore';
@@ -12,31 +12,18 @@ import './Home.css';
 
 const Home = () => {
   const user = useAuthStore(state => state.user);
-  const { cars, getAllCars } = useCarsStore();
-  const navigate = useNavigate();
+  const cars = useCarsStore(state => state.cars);
+  const isLoading = useCarsStore(state => state.isLoading);
+  const getAllCars = useCarsStore(state => state.getAllCars);
 
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) {
       navigate('/login');
       return;
     }
-
-    let cancelled = false;
-
-    (async () => {
-      setLoading(true);
-      try {
-        await getAllCars();
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
+    getAllCars();
   }, [user, navigate, getAllCars]);
 
   const carsFasterThan150 = useMemo(() => {
@@ -52,7 +39,7 @@ const Home = () => {
 
   return (
     <div className='Home'>
-      {loading ? (
+      {isLoading ? (
         <Spinner />
       ) : (
         <>
