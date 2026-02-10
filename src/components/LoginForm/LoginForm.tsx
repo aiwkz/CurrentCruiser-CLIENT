@@ -14,30 +14,28 @@ const LoginForm = (): JSX.Element => {
     INITIAL_LOGIN_FORM_STATE
   );
   const [error, setError] = useState<string | null>(null);
+
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
   const login = useAuthStore(state => state.login);
-  const logout = useAuthStore(state => state.logout);
+
   const navigate = useNavigate();
   const { VITE_BACKEND_URL } = import.meta.env;
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/');
-    }
+    if (isAuthenticated) navigate('/');
   }, [isAuthenticated, navigate]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
-    await logout();
 
     try {
-      await fetchData<{
+      const data = await fetchData<{
         status: string;
         jwttoken: string;
         user: User;
@@ -45,16 +43,17 @@ const LoginForm = (): JSX.Element => {
         url: `${VITE_BACKEND_URL}/auth/login`,
         method: 'POST',
         body: formData,
-        callback: ({ status, jwttoken, user }) => {
-          if (status === 'ok') {
-            login(jwttoken, user);
-          } else {
-            setError('Invalid email or password');
-          }
-        },
+        autoLogoutOnAuthError: false, // ✅ IMPORTANT: don't auto-logout on failed login
       });
-    } catch (error) {
-      console.error('Fetch error:', (error as Error).message);
+
+      if (data.status === 'ok') {
+        login(data.jwttoken, data.user);
+        // no need to navigate here; the effect will redirect on isAuthenticated=true
+      } else {
+        setError('Invalid email or password');
+      }
+    } catch (err) {
+      console.error('Fetch error:', (err as Error).message);
       setError('An error occurred while logging in');
     }
   };
@@ -71,6 +70,7 @@ const LoginForm = (): JSX.Element => {
           onChange={handleInputChange}
           required
         />
+
         <label>Password</label>
         <input
           type='password'
@@ -79,10 +79,13 @@ const LoginForm = (): JSX.Element => {
           onChange={handleInputChange}
           required
         />
+
         {error && <p className='LoginForm-error'>{error}</p>}
+
         <Button type='submit'>Login</Button>
+
         <div>
-          Don't have an account yet?
+          Don&apos;t have an account yet?
           <span
             className='LoginForm-register-action'
             onClick={() => navigate('/register')}

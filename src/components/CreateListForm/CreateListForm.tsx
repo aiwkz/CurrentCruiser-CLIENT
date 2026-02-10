@@ -18,7 +18,6 @@ const CreateListForm = ({ toggleModal }: CreateListFormProps): JSX.Element => {
   const cars = useCarsStore(state => state.cars);
 
   const lists = useListsStore(state => state.lists);
-  const setLists = useListsStore(state => state.setLists);
   const currentListId = useListsStore(state => state.currentListId);
   const createList = useListsStore(state => state.createList);
   const updateList = useListsStore(state => state.updateList);
@@ -74,10 +73,6 @@ const CreateListForm = ({ toggleModal }: CreateListFormProps): JSX.Element => {
     try {
       const payload = buildPayload();
       await updateList(currentListId, payload);
-
-      setLists(
-        lists.map(list => (list._id === currentListId ? payload : list))
-      );
 
       toggleModal();
     } catch (err) {
