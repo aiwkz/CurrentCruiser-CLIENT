@@ -1,11 +1,27 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useCarsStore } from '@/stores/carsStore';
-import Accordion from '@/components/Accordion/Accordion';
 import { INITIAL_CURRENT_CAR_DATA } from '@/constants/constants';
 
 import './CardDetails.css';
+
+type TabKey = 'overview' | 'history' | 'description';
+
+const prettifySpecKey = (key: string): string => {
+  const normalized = key.toLowerCase();
+
+  if (normalized === 'mph0to60') return '0–60';
+  if (normalized === 'topspeed') return 'Top speed';
+  if (normalized === 'horsepower') return 'Power';
+
+  return key
+    .replace(/[_-]/g, ' ')
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/^./, c => c.toUpperCase());
+};
 
 const CardDetails = (): JSX.Element => {
   const currentCar = useCarsStore(state => state.currentCar);
@@ -13,10 +29,10 @@ const CardDetails = (): JSX.Element => {
   const navigate = useNavigate();
   const { VITE_BACKEND_URL } = import.meta.env;
 
+  const [activeTab, setActiveTab] = useState<TabKey>('overview');
+
   useEffect(() => {
-    if (currentCar._id === '') {
-      navigate('/');
-    }
+    if (currentCar._id === '') navigate('/');
   }, [currentCar._id, navigate]);
 
   const handleBackClick = () => {
@@ -24,42 +40,114 @@ const CardDetails = (): JSX.Element => {
     setCurrentCar(INITIAL_CURRENT_CAR_DATA);
   };
 
+  const specsEntries = useMemo(() => {
+    return Object.entries(currentCar.specifications ?? {});
+  }, [currentCar.specifications]);
+
   return (
     <div className='CardDetails'>
-      <div className='CardDetails-name'>
-        <span className='CardDetails-back-action' onClick={handleBackClick}>
-          {'<-'}
-        </span>
-        {currentCar.name}
-      </div>
+      <div className='CardDetails-container'>
+        <header className='CardDetails-header'>
+          <button
+            type='button'
+            className='CardDetails-back'
+            onClick={handleBackClick}
+            aria-label='Go back'
+          >
+            <span aria-hidden='true'>←</span>
+            <span>Back</span>
+          </button>
 
-      <div className='CardDetails-content-container'>
-        <div className='CardDetails-img-specifications-container'>
-          <img
-            alt='Car image'
-            className='CardDetails-img'
-            src={`${VITE_BACKEND_URL}/assets/images/${currentCar.img}`}
-          />
+          <h1 className='CardDetails-title'>{currentCar.name}</h1>
+        </header>
 
-          <div className='CardDetails-title-specifications-container'>
-            <h3 className='CardDetails-specifications-title'>
-              Car specifications
-            </h3>
-            {Object.entries(currentCar.specifications).map(
-              ([key, value], index) => (
-                <div
-                  className='CardDetails-specifications-container'
-                  key={index}
-                >
-                  <span className='CardDetails-specification-key'>{key}:</span>{' '}
-                  <span>{value}</span>
-                </div>
-              )
-            )}
+        <section className='CardDetails-main'>
+          <div className='CardDetails-mediaCard'>
+            <div className='CardDetails-imageWrap'>
+              <img
+                alt={`${currentCar.name} image`}
+                className='CardDetails-img'
+                src={`${VITE_BACKEND_URL}/assets/images/${currentCar.img}`}
+              />
+            </div>
           </div>
-        </div>
 
-        <Accordion />
+          <aside className='CardDetails-infoCard'>
+            <div
+              className='CardDetails-tabs'
+              role='tablist'
+              aria-label='Car details tabs'
+            >
+              <button
+                type='button'
+                role='tab'
+                aria-selected={activeTab === 'overview'}
+                className={`CardDetails-tab ${activeTab === 'overview' ? 'isActive' : ''}`}
+                onClick={() => setActiveTab('overview')}
+              >
+                Overview
+              </button>
+
+              <button
+                type='button'
+                role='tab'
+                aria-selected={activeTab === 'history'}
+                className={`CardDetails-tab ${activeTab === 'history' ? 'isActive' : ''}`}
+                onClick={() => setActiveTab('history')}
+              >
+                History
+              </button>
+
+              <button
+                type='button'
+                role='tab'
+                aria-selected={activeTab === 'description'}
+                className={`CardDetails-tab ${activeTab === 'description' ? 'isActive' : ''}`}
+                onClick={() => setActiveTab('description')}
+              >
+                Description
+              </button>
+            </div>
+
+            <div className='CardDetails-panel' role='tabpanel'>
+              {activeTab === 'overview' && (
+                <>
+                  <h2 className='CardDetails-panelTitle'>Key specs</h2>
+                  <dl className='CardDetails-specsGrid'>
+                    {specsEntries.map(([key, value]) => (
+                      <div className='CardDetails-specRow' key={key}>
+                        <dt className='CardDetails-specKey'>
+                          {prettifySpecKey(key)}
+                        </dt>
+                        <dd className='CardDetails-specValue'>
+                          {String(value)}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </>
+              )}
+
+              {activeTab === 'history' && (
+                <>
+                  <h2 className='CardDetails-panelTitle'>History</h2>
+                  <p className='CardDetails-text'>
+                    {currentCar.history || 'No history available.'}
+                  </p>
+                </>
+              )}
+
+              {activeTab === 'description' && (
+                <>
+                  <h2 className='CardDetails-panelTitle'>Description</h2>
+                  <p className='CardDetails-text'>
+                    {currentCar.description || 'No description available.'}
+                  </p>
+                </>
+              )}
+            </div>
+          </aside>
+        </section>
       </div>
     </div>
   );

@@ -7,13 +7,17 @@ import './DefaultLayout.css';
 
 const DefaultLayout = (): JSX.Element => {
   return (
-    <>
+    <div className='Layout'>
       <Header />
-      <div className='content'>
-        <Outlet />
-      </div>
+
+      <main className='content'>
+        <div className='content-inner'>
+          <Outlet />
+        </div>
+      </main>
+
       <Footer />
-    </>
+    </div>
   );
 };
 

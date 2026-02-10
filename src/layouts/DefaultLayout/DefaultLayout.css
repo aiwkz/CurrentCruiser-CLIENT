@@ -1,11 +1,24 @@
-.content {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 0 1rem 1rem;
+.Layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.content Outlet {
-    flex-grow: 1;
+.content {
+  flex: 1;
+  width: 100%;
+  padding: 0 1rem 1.5rem;
+}
+
+.content-inner {
+  width: 100%;
+  max-width: 75rem;
+  margin: 0 auto;
+}
+
+/* slightly more breathing room on larger screens */
+@media (min-width: 48rem) {
+  .content {
+    padding: 0 1.5rem 2rem;
+  }
 }

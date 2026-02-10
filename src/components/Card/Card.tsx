@@ -1,40 +1,73 @@
 import { useNavigate } from 'react-router-dom';
+
 import { Car } from '@/types';
 import { useCarsStore } from '@/stores/carsStore';
 
+import './Card.css';
+
 interface CardProps {
-  id: string;
-  img: string;
-  name: string;
-  description: string;
+  car: Car;
+  onAddToList?: (car: Car) => void;
 }
 
-const Card = ({ id, img, name, description }: CardProps) => {
-  const cars = useCarsStore(state => state.cars);
+const Card = ({ car, onAddToList }: CardProps) => {
   const setCurrentCar = useCarsStore(state => state.setCurrentCar);
   const navigate = useNavigate();
   const { VITE_BACKEND_URL } = import.meta.env;
 
-  const handleCardClick = () => {
-    const selectedCar = cars.find((car: Car) => car._id === id);
-    if (selectedCar) {
-      setCurrentCar(selectedCar);
-      navigate('/car-details');
+  const handleViewDetails = () => {
+    setCurrentCar(car);
+    navigate('/car-details');
+  };
+
+  const handleAddToList = () => {
+    if (onAddToList) {
+      onAddToList(car);
+      return;
     }
+    // don't have the feature wired yet
+    // Later open a modal / navigate to list form / etc.
+    console.log('Add to list clicked:', car._id);
   };
 
   return (
-    <div className='Card' onClick={handleCardClick}>
-      <img
-        alt='Car image'
-        className='Card-img'
-        src={`${VITE_BACKEND_URL}/assets/images/${img}`}
-      />
-      <div className='Card-name-description-container'>
-        <div className='Card-name'>{name}</div>
-        <div className='Card-description'>{description}</div>
+    <article className='Card'>
+      <div className='Card-media'>
+        <img
+          alt={`${car.name} image`}
+          className='Card-img'
+          src={`${VITE_BACKEND_URL}/assets/images/${car.img}`}
+        />
       </div>
-    </div>
+
+      <div className='Card-body'>
+        <h3 className='Card-title'>{car.name}</h3>
+
+        <p className='Card-meta'>
+          <span>0-60: {car.specifications.mph0to60} seconds</span>
+          <span>Top Speed: {car.specifications.topSpeed} mph</span>
+          <span>Power: {car.specifications.horsepower} hp</span>
+        </p>
+
+        <div className='Card-actions'>
+          <button
+            type='button'
+            className='Card-btn Card-btn--primary'
+            onClick={handleViewDetails}
+          >
+            View details
+          </button>
+
+          <button
+            type='button'
+            className='Card-btn Card-btn--ghost'
+            onClick={handleAddToList}
+          >
+            Add to list
+          </button>
+        </div>
+      </div>
+    </article>
   );
 };
 

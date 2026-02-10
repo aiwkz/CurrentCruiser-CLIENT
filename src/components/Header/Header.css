@@ -1,12 +1,68 @@
 .Header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem 4rem 1rem;
-    width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.Header-inner {
+  height: 4rem;
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+.Header-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: #0f172a;
 }
 
 .Header-logo {
-    width: 3rem;
-    height: auto;
+  width: 2rem;
+  height: 2rem;
+  display: block;
+}
+
+.Header-brandText {
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.0125rem;
+}
+
+.Header-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.Header-navLink {
+  text-decoration: none;
+  color: #334155;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.25rem;
+  border-bottom: 0.125rem solid transparent;
+}
+
+.Header-navLink:hover {
+  color: #0f172a;
+}
+
+.Header-navLink--active {
+  color: #0f172a;
+  border-bottom-color: #2563eb;
+}
+
+.Header-right {
+  display: flex;
+  justify-content: flex-end;
 }
