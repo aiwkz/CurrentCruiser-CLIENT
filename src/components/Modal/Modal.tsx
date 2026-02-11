@@ -22,7 +22,7 @@ const Modal = ({ isOpen, toggleModal }: ModalProps): JSX.Element => {
             </button>
             <div className='Modal-body'>
               <CreateListForm
-                key={currentListId ?? 'new'}
+                key={currentListId || 'new'}
                 toggleModal={toggleModal}
               />
             </div>

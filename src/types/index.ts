@@ -75,3 +75,14 @@ export interface ApiError {
   status: number;
   errors?: Record<string, string[]>;
 }
+
+export type CreateListPayload = {
+  user_id: string;
+  title: string;
+  cars: string[];
+};
+
+export type UpdateListPayload = {
+  title?: string;
+  cars?: string[];
+};
