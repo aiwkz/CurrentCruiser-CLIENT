@@ -33,7 +33,7 @@ export interface List {
   _id: string;
   title: string;
   userId: string;
-  cars: Car[];
+  cars: string[];
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;

@@ -35,7 +35,7 @@ const CreateListForm = ({ handleToggle }: CreateListFormProps): JSX.Element => {
   );
 
   const [selectedCarIds, setSelectedCarIds] = useState<string[]>(
-    () => listToEdit?.cars.map(c => (typeof c === 'string' ? c : c._id)) ?? []
+    () => listToEdit?.cars ?? []
   );
 
   useEffect(() => {
