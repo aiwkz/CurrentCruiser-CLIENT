@@ -8,6 +8,7 @@ import CardList from '@/components/CardList/CardList';
 import Spinner from '@/components/Spinner/Spinner';
 import Modal from '@/components/Modal/Modal';
 import Button from '@/components/Button/Button';
+import { hydrateCarsForList } from '@/utils/lists/lists';
 
 import { Car } from '@/types';
 
@@ -56,9 +57,7 @@ const Lists = (): JSX.Element => {
     return lists.map(list => ({
       id: list._id,
       listTitle: list.title,
-      cars: list.cars
-        .map(c => carsById.get(c._id))
-        .filter((c): c is Car => Boolean(c)),
+      cars: hydrateCarsForList(list, carsById),
     }));
   }, [lists, cars]);
 

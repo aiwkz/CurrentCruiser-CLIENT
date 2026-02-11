@@ -1,57 +1,62 @@
 .Lists {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Lists-add-button {
+  margin-top: 1.5rem;
 }
 
 .Lists-title {
-    margin: 1.5rem;
-    font-size: 2rem;
+  margin: 1.5rem;
+  font-size: 2rem;
 }
 
 .Lists-list-container {
-    margin-block: 2rem;
+  margin-block: 2rem;
 }
 
 .Lists-action-buttons-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-    width: 100%;
-    padding-inline: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  padding-inline: 3rem;
 }
 
 .Lists-button-edit-icon,
 .Lists-button-delete-icon {
-    width: 1rem;
-    height: auto;
+  width: 1rem;
+  height: auto;
 }
 
 .Lists-button {
-    background-color: var(--white-color);
-    border-radius: 0.5rem;
-    border: 2px solid var(--primary-color);
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: black;
+  background-color: var(--white-color);
+  border-radius: 0.5rem;
+  border: 2px solid var(--primary-color);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: black;
 }
 
 .Lists-button:hover {
-    background-color: var(--primary-color);
-    color: white;
+  background-color: var(--primary-color);
+  color: white;
 }
 
 .Lists-delete-action {
-    border: 2px solid var(--warning-color);
+  border: 2px solid var(--warning-color);
 }
 
 .Lists-delete-action:hover {
-    background-color: var(--warning-color);
-    color: white;
+  background-color: var(--warning-color);
+  color: white;
 }
