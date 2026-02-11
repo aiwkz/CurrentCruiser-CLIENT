@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { List } from '@/types';
+import { List, CreateListPayload, UpdateListPayload } from '@/types';
 import { fetchData } from '@/utils/utils';
 
 type AsyncStatus = 'idle' | 'loading' | 'success' | 'error';
@@ -15,11 +15,11 @@ interface ListsState {
 
   setCurrentListId: (id: string) => void;
 
-  createList: (newList: Partial<List>) => Promise<void>;
+  createList: (newList: CreateListPayload) => Promise<void>;
   getAllLists: () => Promise<void>;
   getListById: (id: string) => Promise<void>;
   getListsByUserId: (userId: string) => Promise<void>;
-  updateList: (id: string, updatedList: Partial<List>) => Promise<void>;
+  updateList: (id: string, updatedList: UpdateListPayload) => Promise<void>;
   deleteList: (id: string) => Promise<void>;
 
   clearError: () => void;

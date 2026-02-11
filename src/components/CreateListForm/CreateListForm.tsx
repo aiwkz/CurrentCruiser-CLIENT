@@ -6,7 +6,6 @@ import { useListsStore } from '@/stores/listsStore';
 import { useAuthStore } from '@/stores/authStore';
 import Button from '@/components/Button/Button';
 import { INITIAL_LIST_FORM_STATE } from '@/constants/constants';
-import { List } from '@/types';
 
 import './CreateListForm.css';
 
@@ -43,11 +42,6 @@ const CreateListForm = ({ toggleModal }: CreateListFormProps): JSX.Element => {
     if (!user) navigate('/login');
   }, [user, navigate]);
 
-  const selectedCars = useMemo(
-    () => cars.filter(car => selectedCarIds.includes(car._id)),
-    [cars, selectedCarIds]
-  );
-
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
@@ -60,18 +54,22 @@ const CreateListForm = ({ toggleModal }: CreateListFormProps): JSX.Element => {
     );
   };
 
-  const buildPayload = (): List => ({
-    ...(listToEdit ?? INITIAL_LIST_FORM_STATE),
+  const buildPayload = () => ({
+    user_id: user!._id,
     title,
-    userId: user!._id,
-    cars: selectedCars,
+    cars: selectedCarIds,
+  });
+
+  const buildUpdatePayload = () => ({
+    title,
+    cars: selectedCarIds,
   });
 
   const handleEdit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      const payload = buildPayload();
+      const payload = buildUpdatePayload();
       await updateList(currentListId, payload);
 
       toggleModal();
