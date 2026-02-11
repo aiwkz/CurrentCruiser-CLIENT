@@ -7,9 +7,14 @@ import './Modal.css';
 interface ModalProps {
   isOpen: boolean;
   toggleModal: () => void;
+  handleToggle: () => void;
 }
 
-const Modal = ({ isOpen, toggleModal }: ModalProps): JSX.Element => {
+const Modal = ({
+  isOpen,
+  toggleModal,
+  handleToggle,
+}: ModalProps): JSX.Element => {
   const currentListId = useListsStore(state => state.currentListId);
 
   return (
@@ -17,13 +22,13 @@ const Modal = ({ isOpen, toggleModal }: ModalProps): JSX.Element => {
       {isOpen && (
         <div className='Modal-overlay' onClick={toggleModal}>
           <div className='Modal-content' onClick={e => e.stopPropagation()}>
-            <button className='Modal-button-close' onClick={toggleModal}>
+            <button className='Modal-button-close' onClick={handleToggle}>
               X
             </button>
             <div className='Modal-body'>
               <CreateListForm
                 key={currentListId || 'new'}
-                toggleModal={toggleModal}
+                handleToggle={handleToggle}
               />
             </div>
           </div>

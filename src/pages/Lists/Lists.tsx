@@ -66,6 +66,11 @@ const Lists = (): JSX.Element => {
     setIsModalOpen(prev => !prev);
   };
 
+  const handleToggle = () => {
+    setCurrentListId('');
+    toggleModal();
+  };
+
   const handleEdit = (id: string) => {
     setCurrentListId(id);
     toggleModal();
@@ -79,11 +84,15 @@ const Lists = (): JSX.Element => {
 
   return (
     <div className='Lists'>
-      <Button className='Lists-add-button' onClick={toggleModal}>
+      <Button className='Lists-add-button' onClick={handleToggle}>
         Create List
       </Button>
 
-      <Modal isOpen={isModalOpen} toggleModal={toggleModal} />
+      <Modal
+        isOpen={isModalOpen}
+        toggleModal={toggleModal}
+        handleToggle={handleToggle}
+      />
 
       <h2 className='Lists-title'>Your Lists</h2>
 
