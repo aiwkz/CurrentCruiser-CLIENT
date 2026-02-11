@@ -6,14 +6,13 @@ import { useListsStore } from '@/stores/listsStore';
 import { useAuthStore } from '@/stores/authStore';
 import Button from '@/components/Button/Button';
 import { INITIAL_LIST_FORM_STATE } from '@/constants/constants';
-
 import './CreateListForm.css';
 
 interface CreateListFormProps {
-  toggleModal: () => void;
+  handleToggle: () => void;
 }
 
-const CreateListForm = ({ toggleModal }: CreateListFormProps): JSX.Element => {
+const CreateListForm = ({ handleToggle }: CreateListFormProps): JSX.Element => {
   const cars = useCarsStore(state => state.cars);
 
   const lists = useListsStore(state => state.lists);
@@ -34,8 +33,9 @@ const CreateListForm = ({ toggleModal }: CreateListFormProps): JSX.Element => {
   const [title, setTitle] = useState(
     () => listToEdit?.title ?? INITIAL_LIST_FORM_STATE.title
   );
+
   const [selectedCarIds, setSelectedCarIds] = useState<string[]>(
-    () => listToEdit?.cars.map(car => car._id) ?? []
+    () => listToEdit?.cars.map(c => (typeof c === 'string' ? c : c._id)) ?? []
   );
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const CreateListForm = ({ toggleModal }: CreateListFormProps): JSX.Element => {
       const payload = buildUpdatePayload();
       await updateList(currentListId, payload);
 
-      toggleModal();
+      handleToggle();
     } catch (err) {
       console.error('Fetch error:', (err as Error).message);
       setError('An error occurred while editing list');
@@ -87,7 +87,7 @@ const CreateListForm = ({ toggleModal }: CreateListFormProps): JSX.Element => {
       const payload = buildPayload();
       await createList(payload);
 
-      toggleModal();
+      handleToggle();
     } catch (err) {
       console.error('Fetch error:', (err as Error).message);
       setError('An error occurred while creating list');
