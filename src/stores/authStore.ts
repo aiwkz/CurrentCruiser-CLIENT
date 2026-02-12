@@ -35,7 +35,8 @@ const readAuthFromStorage = (): { token: string | null; user: User | null } => {
   }
 
   // if one is missing/corrupted, treat auth as invalid
-  if (!token || !user) return { token: null, user: null };
+  if (!token || token === 'undefined' || token === 'null')
+    return { token: null, user: null };
 
   return { token, user };
 };
@@ -58,9 +59,14 @@ export const useAuthStore = create<AuthState>((set, get) => {
     },
 
     login: (token, user) => {
-      localStorage.setItem(TOKEN_KEY, token);
+      if (typeof token !== 'string') return;
+
+      const t = token.trim();
+      if (!t || t.split('.').length !== 3) return;
+
+      localStorage.setItem(TOKEN_KEY, t);
       localStorage.setItem(USER_KEY, JSON.stringify(user));
-      set({ token, user, isAuthenticated: true });
+      set({ token: t, user, isAuthenticated: true });
     },
 
     logout: () => {

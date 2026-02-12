@@ -2,7 +2,7 @@ import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAuthStore } from '@/stores/authStore';
-import { fetchData } from '@/utils/utils';
+import { fetchData } from '@/utils/fetchData';
 import { INITIAL_REGISTER_FORM_STATE } from '@/constants/constants';
 import Button from '@/components/Button/Button';
 import { RegisterFormData, User } from '@/types';

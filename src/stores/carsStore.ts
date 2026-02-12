@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { Car } from '@/types';
 import { INITIAL_CURRENT_CAR_DATA } from '@/constants/constants';
-import { fetchData } from '@/utils/utils';
+import { fetchData } from '@/utils/fetchData';
 
 type AsyncStatus = 'idle' | 'loading' | 'success' | 'error';
 

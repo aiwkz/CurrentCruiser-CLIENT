@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { List, CreateListPayload, UpdateListPayload } from '@/types';
-import { fetchData } from '@/utils/utils';
+import { fetchData } from '@/utils/fetchData';
 
 type AsyncStatus = 'idle' | 'loading' | 'success' | 'error';
 

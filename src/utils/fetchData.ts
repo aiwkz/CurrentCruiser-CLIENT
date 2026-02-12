@@ -56,7 +56,8 @@ export const fetchData = async <T>({
 }: FetchDataParams): Promise<T> => {
   const controller = new AbortController();
   const abortTimeout = setTimeout(() => controller.abort(), timeout);
-  const authToken = token ?? useAuthStore.getState().token;
+  const authTokenRaw = token ?? useAuthStore.getState().token;
+  const authToken = typeof authTokenRaw === 'string' ? authTokenRaw : null;
 
   try {
     const res = await fetch(url, {
