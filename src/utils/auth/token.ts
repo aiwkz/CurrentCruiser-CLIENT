@@ -4,14 +4,11 @@ export type LoginResponse = {
   status: string;
   user: User;
   token?: string;
-  jwttoken?: string;
-  jwtToken?: string;
   accessToken?: string;
 };
 
 export const extractToken = (data: LoginResponse): string | null => {
-  const token =
-    data.token ?? data.jwttoken ?? data.jwtToken ?? data.accessToken ?? null;
+  const token = data.token;
 
   if (typeof token !== 'string') return null;
 
