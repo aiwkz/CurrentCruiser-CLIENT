@@ -86,3 +86,12 @@ export type UpdateListPayload = {
   title?: string;
   cars?: string[];
 };
+
+export type LoginResponse = {
+  status: string;
+  user: User;
+  token?: string;
+  jwttoken?: string;
+  jwtToken?: string;
+  accessToken?: string;
+};

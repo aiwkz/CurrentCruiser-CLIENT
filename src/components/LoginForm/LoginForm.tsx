@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAuthStore } from '@/stores/authStore';
 import Button from '@/components/Button/Button';
-import { fetchData } from '@/utils/utils';
+import { fetchData } from '@/utils/fetchData';
+import { extractToken } from '@/utils/auth/token';
 import { INITIAL_LOGIN_FORM_STATE } from '@/constants/constants';
-import { LoginFormData, User } from '@/types';
+import { LoginFormData, LoginResponse } from '@/types';
 
 import './LoginForm.css';
 
@@ -35,20 +36,17 @@ const LoginForm = (): JSX.Element => {
     setError(null);
 
     try {
-      const data = await fetchData<{
-        status: string;
-        jwttoken: string;
-        user: User;
-      }>({
+      const data = await fetchData<LoginResponse>({
         url: `${VITE_BACKEND_URL}/auth/login`,
         method: 'POST',
         body: formData,
-        autoLogoutOnAuthError: false, // ✅ IMPORTANT: don't auto-logout on failed login
+        autoLogoutOnAuthError: false,
       });
 
-      if (data.status === 'ok') {
-        login(data.jwttoken, data.user);
-        // no need to navigate here; the effect will redirect on isAuthenticated=true
+      const token = extractToken(data);
+
+      if (data.status === 'ok' && token) {
+        login(token, data.user);
       } else {
         setError('Invalid email or password');
       }
