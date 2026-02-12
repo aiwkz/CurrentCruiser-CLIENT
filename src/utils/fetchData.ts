@@ -1,5 +1,5 @@
 import { useAuthStore } from '@/stores/authStore';
-
+import { User } from '@/types/index';
 export interface FetchDataParams {
   url: string;
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';

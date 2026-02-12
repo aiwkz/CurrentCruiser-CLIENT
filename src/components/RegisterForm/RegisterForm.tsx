@@ -5,7 +5,7 @@ import { useAuthStore } from '@/stores/authStore';
 import { fetchData } from '@/utils/fetchData';
 import { INITIAL_REGISTER_FORM_STATE } from '@/constants/constants';
 import Button from '@/components/Button/Button';
-import { RegisterFormData, User } from '@/types';
+import { RegisterFormData, RegisterResponse } from '@/types';
 
 import './RegisterForm.css';
 
@@ -37,22 +37,18 @@ const RegisterForm = (): JSX.Element => {
     await logout();
 
     try {
-      await fetchData<{
-        status: string;
-        jwttoken: string;
-        user: User;
-      }>({
+      const data = await fetchData<RegisterResponse>({
         url: `${VITE_BACKEND_URL}/auth/register`,
         method: 'POST',
         body: formData,
-        callback: ({ status, jwttoken, user }) => {
-          if (status === 'ok') {
-            login(jwttoken, user);
-          } else {
-            setError('Invalid email or password');
-          }
-        },
+        autoLogoutOnAuthError: false,
       });
+
+      if (data.status === 'ok') {
+        login(data.token, data.user);
+      } else {
+        setError('Invalid email or password');
+      }
     } catch (error) {
       console.error('Fetch error:', (error as Error).message);
       setError('An error occurred while registering');
